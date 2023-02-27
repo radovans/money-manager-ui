@@ -1,322 +1,145 @@
-import React, { useState, useEffect } from "react";
-import { Box, Button, Typography, useTheme } from "@mui/material";
-import { tokens } from "../../theme";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
-import Header from "../../components/Header";
-import LineChart from "../../components/LineChart";
-import BarChart from "../../components/BarChart";
-import StatBox from "../../components/StatBox";
-import ProgressCircle from "../../components/ProgressCircle";
+import React from "react";
+import FlexBetween from "components/FlexBetween";
+import Header from "components/Header";
+import {
+  DownloadOutlined,
+  PointOfSale,
+  PersonAdd,
+  Traffic,
+} from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Typography,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
+import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+import DashboardTransactions from "scenes/dashboardTransactions";
+import BreakdownChart from "components/BreakdownChart";
+import OverviewChart from "components/OverviewChart";
+import { useGetDashboardQuery } from "state/api";
+import StatBox from "components/StatBox";
 
 const Dashboard = () => {
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
 
-  const [statistics, setStatistics] = useState([]);
-
-  var baseUrl = "http://localhost:8088/statistics";
-
-  useEffect(() => {
-    const fetchStatistics = async () => {
-      await fetch(`${baseUrl}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-        .then((response) => {
-          if (response.ok) {
-            response.json().then((json) => {
-              console.log(json);
-              setStatistics(json);
-            });
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-    fetchStatistics();
-  }, [baseUrl]);
-
-  const [data, setData] = useState([]);
-
-  var baseTransactionsUrl =
-    "http://localhost:8088/transactions?size=20&sort=id&direction=desc";
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await fetch(`${baseTransactionsUrl}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-        .then((response) => {
-          if (response.ok) {
-            response.json().then((json) => {
-              console.log(json);
-              setData(json);
-            });
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-    fetchData();
-  }, [baseTransactionsUrl]);
+  const { statistics } = useGetDashboardQuery();
+  console.log(statistics);
 
   return (
-    <Box m="20px">
-      {/* HEADER */}
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="DASHBOARD" subtitle="Financial dashboard" />
+    <Box m="1.5rem 2.5rem">
+      <FlexBetween>
+        <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+
         <Box>
           <Button
             sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-            onClick={() => {
-              alert('ALL');
-            }}
-          
-          >
-            <CalendarMonthOutlinedIcon sx={{ mr: "10px" }} />
-            All
-          </Button>
-          <Button
-            style={{ marginLeft: ".5rem" }}
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
+              backgroundColor: theme.palette.secondary.light,
+              color: theme.palette.background.alt,
               fontSize: "14px",
               fontWeight: "bold",
               padding: "10px 20px",
             }}
           >
-            <CalendarMonthOutlinedIcon sx={{ mr: "10px" }} />
-            This year
-          </Button>
-          <Button
-            style={{ marginLeft: ".5rem" }}
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-          >
-            <CalendarMonthOutlinedIcon sx={{ mr: "10px" }} />
-            Last year
+            <DownloadOutlined sx={{ mr: "10px" }} />
+            Download Reports
           </Button>
         </Box>
-      </Box>
+      </FlexBetween>
 
-      {/* GRID & CHARTS */}
       <Box
+        mt="20px"
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
-        gridAutoRows="140px"
+        gridAutoRows="160px"
         gap="20px"
+        sx={{
+          "& > div": { gridColumn: isNonMediumScreens ? undefined : "span 12" },
+        }}
       >
         {/* ROW 1 */}
+        <StatBox
+          title="Total Customers"
+          value={statistics && statistics.total}
+          increase="+14%"
+          description="Since last month"
+          icon={
+            <PointOfSale
+              sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
+            />
+          }
+        />
+        <StatBox
+          title="Sales Today"
+          value={statistics && statistics.total}
+          increase="+21%"
+          description="Since last month"
+          icon={
+            <PointOfSale
+              sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
+            />
+          }
+        />
         <Box
-          gridColumn="span 4"
-          backgroundColor={colors.greenAccent[800]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
+          gridColumn="span 8"
+          gridRow="span 2"
+          backgroundColor={theme.palette.background.alt}
+          p="1rem"
+          borderRadius="0.55rem"
         >
-          <StatBox
-            title={statistics?.totalIncomeExpenseStatement?.formattedBalance}
-            subtitle="Total Balance"
-            progress={statistics?.totalIncomeExpenseStatement?.savingsRatio}
-            increase={
-              statistics?.totalIncomeExpenseStatement?.formattedSavingsRatio
-            }
-            icon={
-              <AccountBalanceWalletOutlinedIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
+          <OverviewChart view="sales" isDashboard={true} />
         </Box>
-        <Box
-          gridColumn="span 4"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title={
-              statistics?.yearToDateIncomeExpenseStatement?.formattedBalance
-            }
-            subtitle="Year to Date Balance"
-            progress={
-              statistics?.yearToDateIncomeExpenseStatement?.savingsRatio
-            }
-            increase={
-              statistics?.yearToDateIncomeExpenseStatement
-                ?.formattedSavingsRatio
-            }
-            icon={
-              <AccountBalanceWalletOutlinedIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
-        <Box
-          gridColumn="span 4"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title={statistics?.lastYearIncomeExpenseStatement?.formattedBalance}
-            subtitle="Last Year Balance"
-            progress={statistics?.lastYearIncomeExpenseStatement?.savingsRatio}
-            increase={
-              statistics?.lastYearIncomeExpenseStatement?.formattedSavingsRatio
-            }
-            icon={
-              <AccountBalanceWalletOutlinedIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
+        <StatBox
+          title="Monthly Sales"
+          value={statistics && statistics.total}
+          increase="+5%"
+          description="Since last month"
+          icon={
+            <PersonAdd
+              sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
+            />
+          }
+        />
+        <StatBox
+          title="Yearly Sales"
+          value={statistics && statistics.total}
+          increase="+43%"
+          description="Since last month"
+          icon={
+            <Traffic
+              sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
+            />
+          }
+        />
+
         {/* ROW 2 */}
         <Box
           gridColumn="span 8"
-          gridRow="span 3"
-          backgroundColor={colors.primary[400]}
+          gridRow="span 2"
         >
-          <Box
-            mt="25px"
-            p="0 30px"
-            display="flex "
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Box>
-              <Typography
-                variant="h4"
-                fontWeight="bold"
-                color={colors.grey[100]}
-              >
-                Monthly balance
-              </Typography>
-            </Box>
-          </Box>
-          <Box height="250px" m="0px 30px 0 30px">
-            <LineChart isDashboard={true} />
-          </Box>
+          <DashboardTransactions />
         </Box>
         <Box
           gridColumn="span 4"
           gridRow="span 3"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={theme.palette.background.alt}
+          p="1.5rem"
+          borderRadius="0.55rem"
         >
+          <Typography variant="h6" sx={{ color: theme.palette.secondary[100] }}>
+            Sales By Category
+          </Typography>
+          <BreakdownChart isDashboard={true} />
           <Typography
-            variant="h4"
-            fontWeight="bold"
-            sx={{ padding: "30px 30px 0 30px" }}
+            p="0 0.6rem"
+            fontSize="0.8rem"
+            sx={{ color: theme.palette.secondary[200] }}
           >
-            Main categories
+            Breakdown of real states and information via category for revenue
+            made for this year and total sales.
           </Typography>
-          <Box height="250px" mt="-20px" m="0px 20px 0 14px">
-            <BarChart isDashboard={true} />
-          </Box>
-        </Box>
-
-        {/* ROW 3 */}
-        <Box
-          gridColumn="span 8"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-          overflow="auto"
-        >
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            borderBottom={`4px solid ${colors.primary[500]}`}
-            colors={colors.grey[100]}
-            p="15px"
-          >
-            <Typography color={colors.grey[100]} variant="h4" fontWeight="bold">
-              Recent Transactions
-            </Typography>
-          </Box>
-          {data.map((transaction, i) => (
-            <Box
-              key={`${transaction.id}-${i}`}
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              borderBottom={`4px solid ${colors.primary[500]}`}
-              p="15px"
-            >
-              <Box>
-                <Typography
-                  color={colors.greenAccent[500]}
-                  variant="h5"
-                  fontWeight="600"
-                >
-                  {transaction.recipient}
-                </Typography>
-                <Typography color={colors.grey[100]}>
-                  {transaction.note}
-                </Typography>
-              </Box>
-              <Box color={colors.grey[100]}>{transaction.date}</Box>
-              <Box
-                backgroundColor={colors.greenAccent[800]}
-                p="5px 10px"
-                borderRadius="4px"
-              >
-                {transaction.amountInCzk} CZK
-              </Box>
-            </Box>
-          ))}
-        </Box>
-        <Box
-          gridColumn="span 4"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-          p="30px"
-        >
-          <Typography variant="h5" fontWeight="600">
-            Campaign
-          </Typography>
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            mt="25px"
-          >
-            <ProgressCircle size="125" />
-            <Typography
-              variant="h5"
-              color={colors.greenAccent[500]}
-              sx={{ mt: "15px" }}
-            >
-              $48,352 revenue generated
-            </Typography>
-            <Typography>Includes extra misc expenditures and costs</Typography>
-          </Box>
         </Box>
       </Box>
     </Box>

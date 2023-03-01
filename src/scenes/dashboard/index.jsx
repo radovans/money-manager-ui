@@ -1,12 +1,7 @@
 import React from "react";
 import FlexBetween from "components/FlexBetween";
 import Header from "components/Header";
-import {
-  DownloadOutlined,
-  PointOfSale,
-  PersonAdd,
-  Traffic,
-} from "@mui/icons-material";
+import { DownloadOutlined } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -14,19 +9,20 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import DashboardTransactions from "scenes/dashboardTransactions";
 import BreakdownChart from "components/BreakdownChart";
 import OverviewChart from "components/OverviewChart";
 import { useGetDashboardQuery } from "state/api";
 import StatBox from "components/StatBox";
+import BalanceBox from "components/BalanceBox";
 
 const Dashboard = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
 
-  const { statistics } = useGetDashboardQuery();
-  console.log(statistics);
+  const { data } = useGetDashboardQuery();
+  console.log(data);
 
   return (
     <Box m="1.5rem 2.5rem">
@@ -60,27 +56,12 @@ const Dashboard = () => {
         }}
       >
         {/* ROW 1 */}
-        <StatBox
-          title="Total Customers"
-          value={statistics && statistics.total}
-          increase="+14%"
-          description="Since last month"
-          icon={
-            <PointOfSale
-              sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
-            />
-          }
-        />
-        <StatBox
-          title="Sales Today"
-          value={statistics && statistics.total}
-          increase="+21%"
-          description="Since last month"
-          icon={
-            <PointOfSale
-              sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
-            />
-          }
+        <BalanceBox
+          title="Balance"
+          value={data?.totalIncomeExpenseStatement?.formattedBalance}
+          increase={data?.totalIncomeExpenseStatement?.formattedSavingsRatio}
+          description="Savings ratio"
+          progress={data?.totalIncomeExpenseStatement?.savingsRatio}
         />
         <Box
           gridColumn="span 8"
@@ -92,33 +73,34 @@ const Dashboard = () => {
           <OverviewChart view="sales" isDashboard={true} />
         </Box>
         <StatBox
-          title="Monthly Sales"
-          value={statistics && statistics.total}
-          increase="+5%"
-          description="Since last month"
+          title="Year to date"
+          value={data?.yearToDateIncomeExpenseStatement?.formattedBalance}
+          increase={
+            data?.yearToDateIncomeExpenseStatement?.formattedSavingsRatio
+          }
+          description="Savings ratio"
           icon={
-            <PersonAdd
+            <AccountBalanceWalletOutlinedIcon
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
             />
           }
+          progress={data?.yearToDateIncomeExpenseStatement?.savingsRatio}
         />
         <StatBox
-          title="Yearly Sales"
-          value={statistics && statistics.total}
-          increase="+43%"
-          description="Since last month"
+          title="Last year"
+          value={data?.lastYearIncomeExpenseStatement?.formattedBalance}
+          increase={data?.lastYearIncomeExpenseStatement?.formattedSavingsRatio}
+          description="Savings ratio"
           icon={
-            <Traffic
+            <AccountBalanceWalletOutlinedIcon
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
             />
           }
+          progress={data?.lastYearIncomeExpenseStatement?.savingsRatio}
         />
 
         {/* ROW 2 */}
-        <Box
-          gridColumn="span 8"
-          gridRow="span 2"
-        >
+        <Box gridColumn="span 8" gridRow="span 2">
           <DashboardTransactions />
         </Box>
         <Box

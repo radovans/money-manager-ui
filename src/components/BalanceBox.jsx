@@ -2,12 +2,20 @@ import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import FlexBetween from "./FlexBetween";
 import ProgressCircle from "./ProgressCircle";
+import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 
-const StatBox = ({ title, value, increase, progress, description }) => {
+const BalanceBox = ({
+  title,
+  value,
+  increase,
+  progress,
+  description,
+  icon,
+}) => {
   const theme = useTheme();
   return (
     <Box
-      gridColumn="span 2"
+      gridColumn="span 4"
       gridRow="span 1"
       display="flex"
       flexDirection="column"
@@ -18,14 +26,18 @@ const StatBox = ({ title, value, increase, progress, description }) => {
       borderRadius="0.55rem"
     >
       <FlexBetween>
+        <AccountBalanceWalletOutlinedIcon
+          sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
+        />
         <Typography
-          variant="h5"
+          variant="h4"
           fontWeight="bold"
+          style={{ marginTop: "0.3rem", marginLeft: "-20rem" }}
           sx={{ color: theme.palette.secondary[300] }}
         >
           {title}
         </Typography>
-        <ProgressCircle progress={progress} size={25}/>
+        <ProgressCircle progress={progress} />
       </FlexBetween>
 
       <Typography
@@ -51,4 +63,4 @@ const StatBox = ({ title, value, increase, progress, description }) => {
   );
 };
 
-export default StatBox;
+export default BalanceBox;

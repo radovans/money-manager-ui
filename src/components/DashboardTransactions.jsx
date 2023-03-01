@@ -77,7 +77,7 @@ const DashboardTransactions = () => {
 
   return (
     <Box
-      height="55vh"
+      height="100%"
       sx={{
         "& .MuiDataGrid-root": {
           border: "none",

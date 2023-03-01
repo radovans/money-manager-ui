@@ -13,6 +13,8 @@ export const api = createApi({
     "Admins",
     "Performance",
     "Dashboard",
+    "YearlyStatistics",
+    "MainCategoriesStatistics",
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -31,6 +33,15 @@ export const api = createApi({
       query: () => "statistics",
       providesTags: ["Dashboard"],
     }),
+    getYearlyStatistics: build.query({
+      query: () => "statistics/year-month/year",
+      providesTags: ["YearlyStatistics"],
+    }),
+    getMainCategoriesStatistics: build.query({
+      query: () => "statistics/main-categories",
+      providesTags: ["MainCategoriesStatistics"],
+    }),
+
 
 
     getCustomers: build.query({
@@ -70,4 +81,6 @@ export const {
   useGetAdminsQuery,
   useGetUserPerformanceQuery,
   useGetDashboardQuery,
+  useGetYearlyStatisticsQuery,
+  useGetMainCategoriesStatisticsQuery,
 } = api;

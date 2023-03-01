@@ -2,20 +2,14 @@ import React from "react";
 import FlexBetween from "components/FlexBetween";
 import Header from "components/Header";
 import { DownloadOutlined } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Typography,
-  useTheme,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Button, useTheme, useMediaQuery } from "@mui/material";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
-import DashboardTransactions from "scenes/dashboardTransactions";
-import BreakdownChart from "components/BreakdownChart";
-import OverviewChart from "components/OverviewChart";
+import DashboardTransactions from "components/DashboardTransactions";
 import { useGetDashboardQuery } from "state/api";
 import StatBox from "components/StatBox";
 import BalanceBox from "components/BalanceBox";
+import YearlyBalanceLineChart from "components/YearlyBalanceLineChart";
+import MainCategoriesDonutChart from "components/MainCategoriesDonutChart";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -70,7 +64,7 @@ const Dashboard = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-          <OverviewChart view="sales" isDashboard={true} />
+          <YearlyBalanceLineChart isDashboard={true} />
         </Box>
         <StatBox
           title="Year to date"
@@ -100,28 +94,20 @@ const Dashboard = () => {
         />
 
         {/* ROW 2 */}
-        <Box gridColumn="span 8" gridRow="span 2">
+        <Box
+          gridColumn="span 8"
+          gridRow="span 2"
+        >
           <DashboardTransactions />
         </Box>
         <Box
           gridColumn="span 4"
-          gridRow="span 3"
+          gridRow="span 2"
           backgroundColor={theme.palette.background.alt}
           p="1.5rem"
           borderRadius="0.55rem"
         >
-          <Typography variant="h6" sx={{ color: theme.palette.secondary[100] }}>
-            Sales By Category
-          </Typography>
-          <BreakdownChart isDashboard={true} />
-          <Typography
-            p="0 0.6rem"
-            fontSize="0.8rem"
-            sx={{ color: theme.palette.secondary[200] }}
-          >
-            Breakdown of real states and information via category for revenue
-            made for this year and total sales.
-          </Typography>
+          <MainCategoriesDonutChart isDashboard={true} />
         </Box>
       </Box>
     </Box>

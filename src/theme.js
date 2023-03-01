@@ -40,6 +40,28 @@ export const tokensDark = {
     800: "#665429",
     900: "#332a14",
   },
+  chart_primary: {
+    100: "#e60049",
+    200: "#0bb4ff",
+    300: "#50e991",
+    400: "#e6d800",
+    500: "#9b19f5",
+    600: "#ffa300",
+    700: "#dc0ab4",
+    800: "#b3d4ff",
+    900: "#00bfa0",
+  },
+  chart_secondary: {
+    100: "#e6004980",
+    200: "#0bb4ff80",
+    300: "#50e99180",
+    400: "#e6d80080",
+    500: "#9b19f580",
+    600: "#ffa30080",
+    700: "#dc0ab480",
+    800: "#b3d4ff80",
+    900: "#00bfa080",
+  }
 };
 
 // function that reverses the color palette
@@ -84,6 +106,12 @@ export const themeSettings = (mode) => {
               default: tokensDark.primary[600],
               alt: tokensDark.primary[500],
             },
+            chart: {
+              ...tokensDark.chart_primary,
+            },
+            chart_opacity: {
+              ...tokensDark.chart_secondary,
+            }
           }
         : {
             // palette values for light mode
@@ -105,6 +133,12 @@ export const themeSettings = (mode) => {
               default: tokensDark.grey[0],
               alt: tokensDark.grey[50],
             },
+            chart: {
+              ...tokensDark.chart_primary,
+            },
+            chart_opacity: {
+              ...tokensDark.chart_secondary,
+            }
           }),
     },
     typography: {

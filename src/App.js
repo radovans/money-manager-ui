@@ -6,15 +6,13 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { themeSettings } from "theme";
 import Layout from "scenes/layout";
 import Dashboard from "scenes/dashboard";
-import Customers from "scenes/customers";
 import Transactions from "scenes/transactions";
-import Geography from "scenes/geography";
-import Overview from "scenes/overview";
-import Daily from "scenes/daily";
-import Monthly from "scenes/monthly";
-import Breakdown from "scenes/breakdown";
-import Admin from "scenes/admin";
-import Performance from "scenes/performance";
+import Balance from "scenes/balance";
+import Incomes from "scenes/incomes"
+import Expenses from "scenes/expenses"
+import Categories from "scenes/categories"
+import Cumulative from "scenes/cumulative";
+import Import from "scenes/import";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -28,15 +26,13 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/customers" element={<Customers />} />
               <Route path="/transactions" element={<Transactions />} />
-              <Route path="/geography" element={<Geography />} />
-              <Route path="/overview" element={<Overview />} />
-              <Route path="/daily" element={<Daily />} />
-              <Route path="/monthly" element={<Monthly />} />
-              <Route path="/breakdown" element={<Breakdown />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/performance" element={<Performance />} />
+              <Route path="/import" element={<Import />} />
+              <Route path="/balance" element={<Balance />} />
+              <Route path="/incomes" element={<Incomes />} />
+              <Route path="/expenses" element={<Expenses />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/cumulative" element={<Cumulative />} />
             </Route>
           </Routes>
         </ThemeProvider>

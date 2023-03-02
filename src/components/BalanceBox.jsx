@@ -43,7 +43,7 @@ const BalanceBox = ({
       <Typography
         variant="h3"
         fontWeight="600"
-        sx={{ color: theme.palette.secondary[200] }}
+        sx={{ color: theme.palette.chart[300] }}
       >
         {value}
       </Typography>

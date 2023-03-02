@@ -8,16 +8,15 @@ import DashboardTransactions from "components/DashboardTransactions";
 import { useGetDashboardQuery } from "state/api";
 import StatBox from "components/StatBox";
 import BalanceBox from "components/BalanceBox";
-import YearlyBalanceLineChart from "components/YearlyBalanceLineChart";
-import MainCategoriesDonutChart from "components/MainCategoriesDonutChart";
+import YearlyBalanceLineChart from "components/charts/YearlyBalanceLineChart";
+import MainCategoriesDonutChart from "components/charts/MainCategoriesDonutChart";
 
 const Dashboard = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
 
   const { data } = useGetDashboardQuery();
-  console.log(data);
-
+  
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>

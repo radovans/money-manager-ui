@@ -11,7 +11,7 @@ import {
 import { Line } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { useGetYearlyStatisticsQuery } from "state/api";
-import { useTheme } from "@mui/material";
+import { Box, CircularProgress, useTheme } from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -23,10 +23,23 @@ ChartJS.register(
   ChartDataLabels
 );
 
-const YearlyBalanceLineChart = () => {
+const YearlyIncomesLineChart = ({ isDashboard = false, salaryOnly = false }) => {
   const theme = useTheme();
-  const { data } = useGetYearlyStatisticsQuery();
-  console.log(data);
+  const { data, isLoading } = useGetYearlyStatisticsQuery({
+    salaryOnly
+  });
+
+  if (!data || isLoading)
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        height={650}
+      >
+        <CircularProgress />
+      </Box>
+    );
 
   var chartData = {
     labels: [
@@ -45,41 +58,34 @@ const YearlyBalanceLineChart = () => {
     ],
     datasets: [
       {
-        label: "Average",
-        data: data?.xAverage?.map((x) => x.totalAmount),
-        backgroundColor: theme.palette.chart_opacity[100],
-        borderColor: theme.palette.chart[100],
-        borderWidth: 3,
-      },
-      {
         label: "2023",
-        data: data?.x2023?.map((x) => x.totalAmount),
+        data: data?.x2023?.map((x) => x.incomes),
         backgroundColor: theme.palette.chart_opacity[200],
         borderColor: theme.palette.chart[200],
         borderWidth: 2,
       },
       {
         label: "2022",
-        data: data?.x2022?.map((x) => x.totalAmount),
+        data: data?.x2022?.map((x) => x.incomes),
         backgroundColor: theme.palette.chart_opacity[300],
         borderColor: theme.palette.chart[300],
         borderWidth: 2,
       },
       {
         label: "2021",
-        data: data?.x2021?.map((x) => x.totalAmount),
+        data: data?.x2021?.map((x) => x.incomes),
         backgroundColor: theme.palette.chart_opacity[400],
         borderColor: theme.palette.chart[400],
         borderWidth: 2,
-        hidden: true,
+        hidden: isDashboard ? true : false,
       },
       {
         label: "2020",
-        data: data?.x2020?.map((x) => x.totalAmount),
+        data: data?.x2020?.map((x) => x.incomes),
         backgroundColor: theme.palette.chart_opacity[500],
         borderColor: theme.palette.chart[500],
         borderWidth: 2,
-        hidden: true,
+        hidden: isDashboard ? true : false,
       },
     ],
   };
@@ -90,11 +96,23 @@ const YearlyBalanceLineChart = () => {
       y: {
         beginAtZero: true,
         ticks: {
+          font: {
+            family: theme.typography.fontFamily,
+            size: isDashboard
+              ? theme.typography.fontSizeChartSmall
+              : theme.typography.fontSizeChartMedium,
+          },
           color: "#ffffff",
         },
       },
       x: {
         ticks: {
+          font: {
+            family: theme.typography.fontFamily,
+            size: isDashboard
+              ? theme.typography.fontSizeChartSmall
+              : theme.typography.fontSizeChartMedium,
+          },
           color: "#ffffff",
         },
       },
@@ -104,6 +122,12 @@ const YearlyBalanceLineChart = () => {
         display: true,
         position: "top",
         labels: {
+          font: {
+            family: theme.typography.fontFamily,
+            size: isDashboard
+              ? theme.typography.fontSizeChartSmall
+              : theme.typography.fontSizeChartMedium,
+          },
           usePointStyle: true,
           pointStyle: "circle",
           color: "#ffffff",
@@ -115,6 +139,12 @@ const YearlyBalanceLineChart = () => {
         display: "auto",
         align: "top",
         clip: true,
+        font: {
+          family: theme.typography.fontFamily,
+          size: isDashboard
+            ? theme.typography.fontSizeChartSmall
+            : theme.typography.fontSizeChartMedium,
+        },
       },
       tooltip: {
         enabled: true,
@@ -125,7 +155,18 @@ const YearlyBalanceLineChart = () => {
         titleColor: "#ffffff",
         bodyColor: "#ffffff",
         usePointStyle: true,
-        bodyFont: {},
+        bodyFont: {
+          family: theme.typography.fontFamily,
+          size: isDashboard
+            ? theme.typography.fontSizeChartSmall
+            : theme.typography.fontSizeChartMedium,
+        },
+        titleFont: {
+          family: theme.typography.fontFamily,
+          size: isDashboard
+            ? theme.typography.fontSizeChartSmall
+            : theme.typography.fontSizeChartMedium,
+        },
         callbacks: {
           label: function (context) {
             let label = context.dataset.label || "";
@@ -158,9 +199,13 @@ const YearlyBalanceLineChart = () => {
 
   return (
     <div>
-      <Line data={chartData} height={300} options={options} />
+      <Line
+        data={chartData}
+        height={isDashboard ? 300 : 650}
+        options={options}
+      />
     </div>
   );
 };
 
-export default YearlyBalanceLineChart;
+export default YearlyIncomesLineChart;

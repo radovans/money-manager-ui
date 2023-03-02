@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Box, useTheme } from "@mui/material";
+import { Button, Box, useTheme, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetTransactionsQuery } from "state/api";
 import Header from "components/Header";
@@ -11,6 +11,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import TextField from "@mui/material/TextField";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { SxProps } from "@mui/material";
+import FlexBetween from "components/FlexBetween";
 
 const Transactions = () => {
   const theme = useTheme();
@@ -115,119 +116,104 @@ const Transactions = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="TRANSACTIONS" subtitle="Entire list of transactions" />
-      <Box
-        style={{
-          marginLeft: "41rem",
-          marginBottom: "0.3rem",
-          marginTop: "-2rem",
-        }}
-      >
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker
-            label="From"
-            inputFormat="DD.MM.YYYY"
-            value={from}
-            onChange={(newValue) => {
-              try {
-                setFrom(newValue.toISOString());
-              } catch (e) {}
+      <FlexBetween>
+        <Header title="TRANSACTIONS" subtitle="Entire list of transactions" />
+        <Typography variant="h5" color={theme.palette.secondary[300]}>
+          Total: {data?.totalAmountFormatted}
+        </Typography>
+        <Box>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="From"
+              inputFormat="DD.MM.YYYY"
+              value={from}
+              onChange={(newValue) => {
+                try {
+                  setFrom(newValue.toISOString());
+                } catch (e) {}
+              }}
+              views={["day", "month", "year"]}
+              showDaysOutsideCurrentMonth
+              clearable
+              renderInput={(params) => <TextField {...params} />}
+              PopperProps={{
+                sx: popperSx,
+              }}
+            />
+          </LocalizationProvider>
+          &nbsp;&nbsp;&nbsp;
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="To"
+              inputFormat="DD.MM.YYYY"
+              value={to}
+              onChange={(newValue) => {
+                try {
+                  setTo(newValue.toISOString());
+                } catch (e) {}
+              }}
+              views={["day", "month", "year"]}
+              showDaysOutsideCurrentMonth
+              clearable
+              renderInput={(params) => <TextField {...params} />}
+              PopperProps={{
+                sx: popperSx,
+              }}
+            />
+          </LocalizationProvider>
+          <Button
+            style={{ marginTop: ".25rem", marginLeft: ".5rem" }}
+            sx={{
+              backgroundColor: theme.palette.primary[800],
+              color: theme.palette.primary[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
             }}
-            views={["day", "month", "year"]}
-            showDaysOutsideCurrentMonth
-            clearable
-            renderInput={(params) => <TextField {...params} />}
-            PopperProps={{
-              sx: popperSx,
+            onClick={(e) => {
+              setFrom("2020-01-01T00:00:00.000z");
+              setTo("2023-12-31T23:59:29.999z");
             }}
-          />
-        </LocalizationProvider>
-        &nbsp;&nbsp;&nbsp;
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker
-            label="To"
-            inputFormat="DD.MM.YYYY"
-            value={to}
-            onChange={(newValue) => {
-              try {
-                setTo(newValue.toISOString());
-              } catch (e) {}
+          >
+            <EventBusyOutlinedIcon sx={{ mr: "10px" }} />
+            All
+          </Button>
+          <Button
+            style={{ marginTop: ".25rem", marginLeft: ".5rem" }}
+            sx={{
+              backgroundColor: theme.palette.primary[800],
+              color: theme.palette.primary[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
             }}
-            views={["day", "month", "year"]}
-            showDaysOutsideCurrentMonth
-            clearable
-            renderInput={(params) => <TextField {...params} />}
-            PopperProps={{
-              sx: popperSx,
+            onClick={(e) => {
+              setFrom("2023-01-01T00:00:00.000z");
+              setTo("2023-12-31T23:59:29.999z");
             }}
-          />
-        </LocalizationProvider>
-        <Button
-          style={{ marginTop: ".25rem", marginLeft: ".5rem" }}
-          sx={{
-            backgroundColor: theme.palette.primary[800],
-            color: theme.palette.primary[100],
-            padding: "12px",
-          }}
-          onClick={() => {
-            setFrom("2020-01-01T00:00:00.000z");
-            setTo("2023-12-31T23:59:29.999z");
-          }}
-        >
-          <EventBusyOutlinedIcon sx={{ mr: "0px" }} />
-        </Button>
-        <Button
-          style={{ marginTop: ".25rem", marginLeft: ".5rem" }}
-          sx={{
-            backgroundColor: theme.palette.primary[800],
-            color: theme.palette.primary[100],
-            fontSize: "14px",
-            fontWeight: "bold",
-            padding: "10px 20px",
-          }}
-          onClick={(e) => {
-            setFrom("2020-01-01T00:00:00.000z");
-            setTo("2023-12-31T23:59:29.999z");
-          }}
-        >
-          <CalendarMonthOutlinedIcon sx={{ mr: "10px" }} />
-          All
-        </Button>
-        <Button
-          style={{ marginTop: ".25rem", marginLeft: ".5rem" }}
-          sx={{
-            backgroundColor: theme.palette.primary[800],
-            color: theme.palette.primary[100],
-            fontSize: "14px",
-            fontWeight: "bold",
-            padding: "10px 20px",
-          }}
-          onClick={(e) => {
-            setFrom("2023-01-01T00:00:00.000z");
-            setTo("2023-12-31T23:59:29.999z");
-          }}
-        >
-          <CalendarMonthOutlinedIcon sx={{ mr: "10px" }} />
-          This year
-        </Button>
-        <Button
-          style={{ marginTop: ".25rem", marginLeft: ".5rem" }}
-          sx={{
-            backgroundColor: theme.palette.primary[800],
-            color: theme.palette.primary[100],
-            fontSize: "14px",
-            fontWeight: "bold",
-            padding: "10px 20px",
-          }}
-          onClick={(e) => {
-            setFrom("2022-01-01T00:00:00.000z");
-            setTo("2022-12-31T23:59:29.999z");
-          }}
-        >
-          <CalendarMonthOutlinedIcon sx={{ mr: "10px" }} />
-          Last year
-        </Button>
-      </Box>
+          >
+            <CalendarMonthOutlinedIcon sx={{ mr: "10px" }} />
+            This year
+          </Button>
+          <Button
+            style={{ marginTop: ".25rem", marginLeft: ".5rem" }}
+            sx={{
+              backgroundColor: theme.palette.primary[800],
+              color: theme.palette.primary[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+            }}
+            onClick={(e) => {
+              setFrom("2022-01-01T00:00:00.000z");
+              setTo("2022-12-31T23:59:29.999z");
+            }}
+          >
+            <CalendarMonthOutlinedIcon sx={{ mr: "10px" }} />
+            Last year
+          </Button>
+        </Box>
+      </FlexBetween>
       <Box
         height="80vh"
         sx={{

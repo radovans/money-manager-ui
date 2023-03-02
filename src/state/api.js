@@ -14,7 +14,9 @@ export const api = createApi({
     "Performance",
     "Dashboard",
     "YearlyStatistics",
+    "MonthlyStatistics",
     "MainCategoriesStatistics",
+    "CategoriesStatistics",
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -22,10 +24,10 @@ export const api = createApi({
       providesTags: ["User"],
     }),
     getTransactions: build.query({
-      query: ({ page, size, sort, search, from, to }) => ({
+      query: ({ page, size, sort, search, from, to, category }) => ({
         url: "transactions",
         method: "GET",
-        params: { page, size, sort, search, from, to },
+        params: { page, size, sort, search, from, to, category },
       }),
       providesTags: ["Transactions"],
     }),
@@ -34,15 +36,33 @@ export const api = createApi({
       providesTags: ["Dashboard"],
     }),
     getYearlyStatistics: build.query({
-      query: () => "statistics/year-month/year",
+      query: ({ salaryOnly }) => ({
+        url: "statistics/year-month/year",
+        method: "GET",
+        params: { salaryOnly },
+      }),
       providesTags: ["YearlyStatistics"],
     }),
+    getMonthlyStatistics: build.query({
+      query: () => "statistics/year-month/all",
+      providesTags: ["MonthlyStatistics"],
+    }),
     getMainCategoriesStatistics: build.query({
-      query: () => "statistics/main-categories",
+      query: ({ from, to }) => ({
+        url: "statistics/main-categories",
+        method: "GET",
+        params: { from, to },
+      }),
       providesTags: ["MainCategoriesStatistics"],
     }),
-
-
+    getCategoriesStatistics: build.query({
+      query: ({ from, to, category }) => ({
+        url: "statistics/categories",
+        method: "GET",
+        params: { from, to, category },
+      }),
+      providesTags: ["CategoriesStatistics"],
+    }),
 
     getCustomers: build.query({
       query: () => "client/customers",
@@ -83,4 +103,6 @@ export const {
   useGetDashboardQuery,
   useGetYearlyStatisticsQuery,
   useGetMainCategoriesStatisticsQuery,
+  useGetCategoriesStatisticsQuery,
+  useGetMonthlyStatisticsQuery,
 } = api;

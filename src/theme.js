@@ -168,6 +168,9 @@ export const themeSettings = (mode) => {
         fontFamily: ["Overpass", "sans-serif"].join(","),
         fontSize: 14,
       },
+      fontSizeChartSmall: 12,
+      fontSizeChartMedium: 13,
+      fontSizeChartBig: 14,
     },
   };
 };

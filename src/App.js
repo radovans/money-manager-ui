@@ -13,6 +13,7 @@ import Expenses from "scenes/expenses"
 import Categories from "scenes/categories"
 import Cumulative from "scenes/cumulative";
 import Import from "scenes/import";
+import Rules from "scenes/rules";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -27,6 +28,7 @@ function App() {
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/transactions" element={<Transactions />} />
+              <Route path="/rules" element={<Rules />} />
               <Route path="/import" element={<Import />} />
               <Route path="/balance" element={<Balance />} />
               <Route path="/incomes" element={<Incomes />} />

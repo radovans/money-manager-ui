@@ -1,10 +1,10 @@
 import React from "react";
 import {
   Box,
+  Collapse,
   Drawer,
   IconButton,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -13,40 +13,32 @@ import {
 } from "@mui/material";
 import {
   ChevronLeft,
-  ChevronRightOutlined,
   HomeOutlined,
   ReceiptLongOutlined,
   SsidChartOutlined,
   TrendingUpOutlined,
   TrendingDownOutlined,
   BarChartOutlined,
-  UploadFileOutlined
+  UploadFileOutlined,
+  RuleOutlined,
+  ExpandLess,
+  ExpandMore,
+  TableRowsOutlined,
+  SettingsOutlined,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
+import SidebarItem from "./sidebar/SidebarItem";
 
-const navItems = [
-  {
-    text: "Dashboard",
-    icon: <HomeOutlined />,
-  },
-  {
-    text: "Data",
-    icon: null,
-  },
+const dataItems = [
   {
     text: "Transactions",
     icon: <ReceiptLongOutlined />,
   },
-  {
-    text: "Import",
-    icon: <UploadFileOutlined />,
-  },
-  {
-    text: "Graphs",
-    icon: null,
-  },
+];
+
+const graphsItems = [
   {
     text: "Balance",
     icon: <SsidChartOutlined />,
@@ -69,6 +61,24 @@ const navItems = [
   },
 ];
 
+const settingsItems = [
+  {
+    text: "Rules",
+    icon: <RuleOutlined />,
+  },
+  {
+    text: "Import",
+    icon: <UploadFileOutlined />,
+  },
+];
+
+const navItems = [
+  {
+    text: "Dashboard",
+    icon: <HomeOutlined />,
+  },
+];
+
 const Sidebar = ({
   user,
   drawerWidth,
@@ -78,12 +88,27 @@ const Sidebar = ({
 }) => {
   const { pathname } = useLocation();
   const [active, setActive] = useState("");
+  const [dataOpen, setDataOpen] = useState(false);
+  const [graphsOpen, setGraphsOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const navigate = useNavigate();
   const theme = useTheme();
 
   useEffect(() => {
     setActive(pathname.substring(1));
   }, [pathname]);
+
+  const handleDataClick = () => {
+    setDataOpen(!dataOpen);
+  };
+
+  const handleGraphsClick = () => {
+    setGraphsOpen(!graphsOpen);
+  };
+
+  const handleSettingsClick = () => {
+    setSettingsOpen(!settingsOpen);
+  };
 
   return (
     <Box component="nav">
@@ -120,53 +145,121 @@ const Sidebar = ({
               </FlexBetween>
             </Box>
             <List>
+              {/* DASHBOARD */}
               {navItems.map(({ text, icon }) => {
-                if (!icon) {
-                  return (
-                    <Typography key={text} sx={{ m: "2.25rem 0 1rem 3rem" }}>
-                      {text}
-                    </Typography>
-                  );
-                }
                 const lcText = text.toLowerCase();
 
                 return (
-                  <ListItem key={text} disablePadding>
-                    <ListItemButton
-                      onClick={() => {
-                        navigate(`/${lcText}`);
-                        setActive(lcText);
-                      }}
-                      sx={{
-                        backgroundColor:
-                          active === lcText
-                            ? theme.palette.secondary[300]
-                            : "transparent",
-                        color:
-                          active === lcText
-                            ? theme.palette.primary[600]
-                            : theme.palette.secondary[100],
-                      }}
-                    >
-                      <ListItemIcon
-                        sx={{
-                          ml: "2rem",
-                          color:
-                            active === lcText
-                              ? theme.palette.primary[600]
-                              : theme.palette.secondary[200],
-                        }}
-                      >
-                        {icon}
-                      </ListItemIcon>
-                      <ListItemText primary={text} />
-                      {active === lcText && (
-                        <ChevronRightOutlined sx={{ ml: "auto" }} />
-                      )}
-                    </ListItemButton>
-                  </ListItem>
+                  <SidebarItem
+                    navigate={navigate}
+                    setActive={setActive}
+                    text={text}
+                    lcText={lcText}
+                    active={active}
+                    icon={icon}
+                    ml="1rem"
+                  />
                 );
               })}
+
+              {/* DATA */}
+              <ListItemButton sx={{ m: "0.5rem 0" }} onClick={handleDataClick}>
+                <ListItemIcon
+                  sx={{
+                    ml: "1rem",
+                    color: theme.palette.secondary[200],
+                  }}
+                >
+                  <TableRowsOutlined />
+                </ListItemIcon>
+                <ListItemText primary="Data" />
+                {dataOpen ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+              <Collapse in={dataOpen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {dataItems.map(({ text, icon }) => {
+                    const lcText = text.toLowerCase();
+
+                    return (
+                      <SidebarItem
+                        navigate={navigate}
+                        setActive={setActive}
+                        text={text}
+                        lcText={lcText}
+                        active={active}
+                        icon={icon}
+                      />
+                    );
+                  })}
+                </List>
+              </Collapse>
+
+              {/* GRAPHS */}
+              <ListItemButton sx={{ m: "0.5rem 0" }} onClick={handleGraphsClick}>
+                <ListItemIcon
+                  sx={{
+                    ml: "1rem",
+                    color: theme.palette.secondary[200],
+                  }}
+                >
+                  <SsidChartOutlined />
+                </ListItemIcon>
+                <ListItemText primary="Graphs" />
+                {graphsOpen ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+              <Collapse in={graphsOpen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {graphsItems.map(({ text, icon }) => {
+                    const lcText = text.toLowerCase();
+
+                    return (
+                      <SidebarItem
+                        navigate={navigate}
+                        setActive={setActive}
+                        text={text}
+                        lcText={lcText}
+                        active={active}
+                        icon={icon}
+                      />
+                    );
+                  })}
+                </List>
+              </Collapse>
+
+              {/* SETTINGS */}
+              <ListItemButton
+                sx={{ m: "0.5rem 0" }}
+                onClick={handleSettingsClick}
+              >
+                <ListItemIcon
+                  sx={{
+                    ml: "1rem",
+                    color: theme.palette.secondary[200],
+                  }}
+                >
+                  <SettingsOutlined />
+                </ListItemIcon>
+                <ListItemText primary="Settings" />
+                {settingsOpen ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+              <Collapse in={settingsOpen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {settingsItems.map(({ text, icon }) => {
+                    const lcText = text.toLowerCase();
+
+                    return (
+                      <SidebarItem
+                        navigate={navigate}
+                        setActive={setActive}
+                        text={text}
+                        lcText={lcText}
+                        active={active}
+                        icon={icon}
+                      />
+                    );
+                  })}
+                </List>
+              </Collapse>
             </List>
             <Box m="7.5rem 2rem 2rem 3rem">
               <FlexBetween color={theme.palette.secondary.main}>

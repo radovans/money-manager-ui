@@ -25,7 +25,7 @@ const Transactions = () => {
   const [to, setTo] = useState();
 
   const [searchInput, setSearchInput] = useState("");
-  const { data, isLoading } = useGetTransactionsQuery({
+  const { data, isLoading, isError } = useGetTransactionsQuery({
     page,
     size: size,
     sort: JSON.stringify(sort),
@@ -243,6 +243,7 @@ const Transactions = () => {
       >
         <DataGrid
           loading={isLoading || !data}
+          error={isError}
           getRowId={(row) => row.id}
           rows={(data && data.transactions) || []}
           columns={columns}

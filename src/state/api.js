@@ -17,6 +17,10 @@ export const api = createApi({
     "MonthlyStatistics",
     "MainCategoriesStatistics",
     "CategoriesStatistics",
+    "Rules",
+    "RemoveRule",
+    "Categories",
+    "MainCategories",
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -64,6 +68,57 @@ export const api = createApi({
       providesTags: ["CategoriesStatistics"],
     }),
 
+    
+    getRules: build.query({
+      query: () => "rules",
+      providesTags: ["Rules"],
+    }),
+    addNewRule: build.mutation({
+      query: (payload) => ({
+        url: 'rules',
+        method: 'POST',
+        body: payload,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+      invalidatesTags: ['Rules'],
+    }),
+    editRule: build.mutation({
+      query: ({ id, payload }) => ({
+        url: `rules/${id}`,
+        method: 'PUT',
+        body: payload,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+      invalidatesTags: ['Rules'],
+    }),
+    deleteRule: build.mutation({
+      query: (id) => ({
+        url: `rules/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ['Rules'],
+    }),
+
+
+
+    getCategories: build.query({
+      query: ({ mainCategory }) => ({
+        url: "categories",
+        method: "GET",
+        params: { mainCategory },
+      }),
+      providesTags: ["Categories"],
+    }),
+    getMainCategories: build.query({
+      query: () => "categories/main",
+      providesTags: ["MainCategories"],
+    }),
+
+
     getCustomers: build.query({
       query: () => "client/customers",
       providesTags: ["Customers"],
@@ -105,4 +160,10 @@ export const {
   useGetMainCategoriesStatisticsQuery,
   useGetCategoriesStatisticsQuery,
   useGetMonthlyStatisticsQuery,
+  useGetRulesQuery,
+  useAddNewRuleMutation,
+  useDeleteRuleMutation,
+  useEditRuleMutation,
+  useGetCategoriesQuery,
+  useGetMainCategoriesQuery,
 } = api;

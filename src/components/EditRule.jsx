@@ -3,7 +3,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { useEditRuleMutation } from "state/api";
 import RuleForm from "./RuleForm";
 
-const EditRule = ({ handleClose, editData }) => {
+const EditRule = ({ handleClose, editData, setEditStatus }) => {
   const theme = useTheme();
 
   const [data, setData] = useState({
@@ -22,7 +22,14 @@ const EditRule = ({ handleClose, editData }) => {
   const onSubmit = (e) => {
     let id = editData.id;
     e.preventDefault();
-    editRule({ id: id, payload: data });
+    editRule({ id: id, payload: data })
+      .unwrap()
+      .then(() => {
+        setEditStatus("success");
+      })
+      .catch((error) => {
+        setEditStatus("error");
+      });
     handleClose();
   };
 

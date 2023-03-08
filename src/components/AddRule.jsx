@@ -3,7 +3,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { useAddNewRuleMutation } from "state/api";
 import RuleForm from "./RuleForm";
 
-const AddRule = ({ handleClose }) => {
+const AddRule = ({ handleClose, setAddStatus }) => {
   const theme = useTheme();
 
   const [data, setData] = useState({
@@ -22,9 +22,11 @@ const AddRule = ({ handleClose }) => {
     e.preventDefault();
     addNewRule(data)
       .unwrap()
-      .then(() => {})
-      .then((error) => {
-        console.log(error);
+      .then(() => {
+        setAddStatus("success");
+      })
+      .catech((error) => {
+        setAddStatus("error");
       });
     handleClose();
   };

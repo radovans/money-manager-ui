@@ -8,6 +8,7 @@ import { AddOutlined, DeleteOutline, EditOutlined } from "@mui/icons-material";
 import AddRule from "components/AddRule";
 import EditRule from "components/EditRule";
 import ContainedButton from "components/ContainedButton";
+import CrudSnackbar from "components/CrudSnackbar";
 
 const Rules = () => {
   const theme = useTheme();
@@ -48,12 +49,28 @@ const Rules = () => {
     e.preventDefault();
     deleteRule(selectedRow.id)
       .unwrap()
-      .then(() => {})
-      .then((error) => {
-        console.log(error);
+      .then(() => {
+        setDeleteStatus("success");
+      })
+      .catch((error) => {
+        setDeleteStatus("error");
       });
   };
 
+  // SNACKBAR
+  const [addStatus, setAddStatus] = useState();
+  const [editStatus, setEditStatus] = useState();
+  const [deleteStatus, setDeleteStatus] = useState();
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAddStatus();
+    setEditStatus();
+    setDeleteStatus();
+  };
+
+  // QUERY
   const { data, isLoading } = useGetRulesQuery({});
 
   const columns = [
@@ -138,7 +155,10 @@ const Rules = () => {
           >
             <Fade in={openAddRule}>
               <Box sx={style}>
-                <AddRule handleClose={handleCloseAddRule} />
+                <AddRule
+                  handleClose={handleCloseAddRule}
+                  setAddStatus={setAddStatus}
+                />
               </Box>
             </Fade>
           </Modal>
@@ -167,6 +187,7 @@ const Rules = () => {
                 <EditRule
                   handleClose={handleCloseEditRule}
                   editData={selectedRow}
+                  setEditStatus={setEditStatus}
                 />
               </Box>
             </Fade>
@@ -225,6 +246,14 @@ const Rules = () => {
           onSelectionModelChange={(ids) => onRowsSelectionHandler(ids)}
         />
       </Box>
+
+      <CrudSnackbar
+        addStatus={addStatus}
+        editStatus={editStatus}
+        deleteStatus={deleteStatus}
+        handleCloseSnackbar={handleCloseSnackbar}
+        entity="Rule"
+      />
     </Box>
   );
 };

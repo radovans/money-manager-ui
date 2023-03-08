@@ -29,6 +29,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/transactions" element={<Transactions />} />
               <Route path="/rules" element={<Rules />} />
+              <Route path="/accounts" element={null} />
               <Route path="/import" element={<Import />} />
               <Route path="/balance" element={<Balance />} />
               <Route path="/incomes" element={<Incomes />} />

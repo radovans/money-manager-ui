@@ -1,77 +1,88 @@
 import React, { useState } from "react";
-import { Box, useTheme, Modal, Fade, Backdrop } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { useDeleteRuleMutation, useGetRulesQuery } from "state/api";
+import { Box } from "@mui/material";
+import {
+  useCreateRuleMutation,
+  useDeleteRuleMutation,
+  useUpdateRuleMutation,
+  useGetRulesQuery,
+} from "state/api";
 import Header from "components/Header";
 import FlexBetween from "components/FlexBetween";
-import { AddOutlined, DeleteOutline, EditOutlined } from "@mui/icons-material";
-import AddRule from "components/AddRule";
-import EditRule from "components/EditRule";
-import ContainedButton from "components/ContainedButton";
-import CrudSnackbar from "components/CrudSnackbar";
+import CrudDatagridActions from "components/crudDatagrid/CrudDatagridActions";
+import CrudDatagridTable from "components/crudDatagrid/CrudDatagridTable";
+import RuleInputForm from "components/crudDatagrid/modals/RuleInputForm";
+import CrudDatagridActionUpdate from "components/crudDatagrid/CrudDatagridActionUpdate";
+import CrudDatagridActionCreate from "components/crudDatagrid/CrudDatagridActionCreate";
+import CrudDatagridActionDelete from "components/crudDatagrid/CrudDatagridActionDelete";
 
 const Rules = () => {
-  const theme = useTheme();
-  const icons = {
-    save: <AddOutlined sx={{ mr: "10px" }} />,
-    edit: <EditOutlined sx={{ mr: "10px" }} />,
-    delete: <DeleteOutline sx={{ mr: "10px" }} />,
-  };
+  const entityName = "RULES";
 
+  // ROW SELECT
   const [selectedRow, setSelectedRow] = useState();
 
   const onRowsSelectionHandler = (ids) => {
-    setSelectedRow(ids.map((id) => data.find((row) => row.id === id))[0]);
-  };
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
-
-  const [openAddRule, setOpenAddRule] = useState(false);
-  const handleOpenAddRule = () => setOpenAddRule(true);
-  const handleCloseAddRule = () => setOpenAddRule(false);
-
-  const [openEditRule, setOpenEditRule] = useState(false);
-  const handleOpenEditRule = () => setOpenEditRule(true);
-  const handleCloseEditRule = () => setOpenEditRule(false);
-
-  const [deleteRule] = useDeleteRuleMutation();
-  const onSubmit = (e) => {
-    e.preventDefault();
-    deleteRule(selectedRow.id)
-      .unwrap()
-      .then(() => {
-        setDeleteStatus("success");
-      })
-      .catch((error) => {
-        setDeleteStatus("error");
+    var rowData = ids.map((id) => data.find((row) => row.id === id))[0];
+    setSelectedRow(rowData);
+    if (rowData) {
+      setUpdateInput({
+        ...updateInput,
+        id: rowData.id,
+        key: rowData.key,
+        type: rowData.type,
+        skipTransaction: rowData.skipTransaction,
+        recipient: rowData.recipient,
+        note: rowData.note,
+        mainCategory: rowData.mainCategory,
+        category: rowData.category,
+        label: rowData.label,
       });
-  };
-
-  // SNACKBAR
-  const [addStatus, setAddStatus] = useState();
-  const [editStatus, setEditStatus] = useState();
-  const [deleteStatus, setDeleteStatus] = useState();
-  const handleCloseSnackbar = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
     }
-    setAddStatus();
-    setEditStatus();
-    setDeleteStatus();
   };
 
-  // QUERY
-  const { data, isLoading } = useGetRulesQuery({});
+  // INPUTS
+  const [createInput, setCreateInput] = useState({
+    key: "",
+    type: "NOTE",
+    skipTransaction: false,
+    recipient: "",
+    note: "",
+    mainCategory: "",
+    category: "",
+    label: "",
+  });
+
+  const [updateInput, setUpdateInput] = useState({
+    id: selectedRow && selectedRow.id,
+    key: selectedRow && selectedRow.key,
+    type: selectedRow && selectedRow.type,
+    skipTransaction: selectedRow && selectedRow.skipTransaction,
+    recipient: selectedRow && selectedRow.recipient,
+    note: selectedRow && selectedRow.note,
+    mainCategory: selectedRow && selectedRow.mainCategory,
+    category: selectedRow && selectedRow.category,
+    label: selectedRow && selectedRow.label,
+  });
+
+  const handleClearInput = () => {
+    setCreateInput({
+      ...createInput,
+      key: "",
+      type: "NOTE",
+      skipTransaction: false,
+      recipient: "",
+      note: "",
+      mainCategory: "",
+      category: "",
+      label: "",
+    });
+  };
+
+  // QUERIES
+  const { data, isLoading } = useGetRulesQuery();
+  const [createQuery] = useCreateRuleMutation();
+  const [updateQuery] = useUpdateRuleMutation();
+  const [deleteQuery] = useDeleteRuleMutation();
 
   const columns = [
     {
@@ -134,125 +145,46 @@ const Rules = () => {
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
         <Header title="RULES" subtitle="Rules management" />
-        <Box>
-          <ContainedButton
-            text="Add Rule"
-            icon={icons.save}
-            onClick={handleOpenAddRule}
-          />
-          <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            open={openAddRule}
-            onClose={handleCloseAddRule}
-            closeAfterTransition
-            slots={{ backdrop: Backdrop }}
-            slotProps={{
-              backdrop: {
-                timeout: 500,
-              },
-            }}
-          >
-            <Fade in={openAddRule}>
-              <Box sx={style}>
-                <AddRule
-                  handleClose={handleCloseAddRule}
-                  setAddStatus={setAddStatus}
-                />
-              </Box>
-            </Fade>
-          </Modal>
-          <ContainedButton
-            text="Edit Rule"
-            icon={icons.edit}
-            onClick={handleOpenEditRule}
-            disabled={!selectedRow}
-            marginLeft={10}
-          />
-          <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            open={openEditRule}
-            onClose={handleCloseEditRule}
-            closeAfterTransition
-            slots={{ backdrop: Backdrop }}
-            slotProps={{
-              backdrop: {
-                timeout: 500,
-              },
-            }}
-          >
-            <Fade in={openEditRule}>
-              <Box sx={style}>
-                <EditRule
-                  handleClose={handleCloseEditRule}
-                  editData={selectedRow}
-                  setEditStatus={setEditStatus}
-                />
-              </Box>
-            </Fade>
-          </Modal>
-          <ContainedButton
-            text="Delete"
-            icon={icons.delete}
-            onClick={onSubmit}
-            disabled={!selectedRow}
-            marginLeft={10}
-          />
-        </Box>
-      </FlexBetween>
-      <Box
-        height="80vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.primary.light,
-          },
-          "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderTop: "none",
-          },
-          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${theme.palette.secondary[200]} !important`,
-          },
-        }}
-      >
-        <DataGrid
-          sx={{
-            "& .MuiDataGrid-row.Mui-selected": {
-              backgroundColor: theme.palette.primary[700],
-            },
-            "& .MuiDataGrid-row:hover": {
-              backgroundColor: theme.palette.secondary[200],
-              color: theme.palette.primary[500],
-            },
-          }}
-          loading={isLoading || !data}
-          getRowId={(row) => row.id}
-          rows={data || []}
-          columns={columns}
-          hideFooter
-          onSelectionModelChange={(ids) => onRowsSelectionHandler(ids)}
+        <CrudDatagridActions
+          createAction={
+            <CrudDatagridActionCreate
+              entityName={entityName}
+              createQuery={createQuery}
+              createInput={createInput}
+              setCreateInput={setCreateInput}
+              handleClearInput={handleClearInput}
+              Form={
+                <RuleInputForm data={createInput} setData={setCreateInput} />
+              }
+            />
+          }
+          updateAction={
+            <CrudDatagridActionUpdate
+              entityName={entityName}
+              updateQuery={updateQuery}
+              selectedRow={selectedRow}
+              updateInput={updateInput}
+              setUpdateInput={setUpdateInput}
+              handleClearInput={handleClearInput}
+              Form={
+                <RuleInputForm data={updateInput} setData={setUpdateInput} />
+              }
+            />
+          }
+          deleteAction={
+            <CrudDatagridActionDelete
+              entityName={entityName}
+              deleteQuery={deleteQuery}
+              selectedRow={selectedRow}
+            />
+          }
         />
-      </Box>
-
-      <CrudSnackbar
-        addStatus={addStatus}
-        editStatus={editStatus}
-        deleteStatus={deleteStatus}
-        handleCloseSnackbar={handleCloseSnackbar}
-        entity="Rule"
+      </FlexBetween>
+      <CrudDatagridTable
+        columns={columns}
+        data={data}
+        isLoading={isLoading}
+        onRowsSelectionHandler={onRowsSelectionHandler}
       />
     </Box>
   );

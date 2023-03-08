@@ -18,6 +18,7 @@ export const api = createApi({
     "MainCategoriesStatistics",
     "CategoriesStatistics",
     "Rules",
+    "Accounts",
     "RemoveRule",
     "Categories",
     "MainCategories",
@@ -68,43 +69,77 @@ export const api = createApi({
       providesTags: ["CategoriesStatistics"],
     }),
 
-    
+    // RULES
     getRules: build.query({
       query: () => "rules",
       providesTags: ["Rules"],
     }),
-    addNewRule: build.mutation({
+    createRule: build.mutation({
       query: (payload) => ({
-        url: 'rules',
-        method: 'POST',
+        url: "rules",
+        method: "POST",
         body: payload,
         headers: {
-          'Content-type': 'application/json; charset=UTF-8',
+          "Content-type": "application/json; charset=UTF-8",
         },
       }),
-      invalidatesTags: ['Rules'],
+      invalidatesTags: ["Rules"],
     }),
-    editRule: build.mutation({
+    updateRule: build.mutation({
       query: ({ id, payload }) => ({
         url: `rules/${id}`,
-        method: 'PUT',
+        method: "PUT",
         body: payload,
         headers: {
-          'Content-type': 'application/json; charset=UTF-8',
+          "Content-type": "application/json; charset=UTF-8",
         },
       }),
-      invalidatesTags: ['Rules'],
+      invalidatesTags: ["Rules"],
     }),
     deleteRule: build.mutation({
       query: (id) => ({
         url: `rules/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ['Rules'],
+      invalidatesTags: ["Rules"],
     }),
 
+    // ACCOUNTS
+    getAccounts: build.query({
+      query: () => "accounts",
+      providesTags: ["Accounts"],
+    }),
+    createAccount: build.mutation({
+      query: (payload) => ({
+        url: "accounts",
+        method: "POST",
+        body: payload,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }),
+      invalidatesTags: ["Accounts"],
+    }),
+    updateAccount: build.mutation({
+      query: ({ id, payload }) => ({
+        url: `accounts/${id}`,
+        method: "PUT",
+        body: payload,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }),
+      invalidatesTags: ["Accounts"],
+    }),
+    deleteAccount: build.mutation({
+      query: (id) => ({
+        url: `accounts/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Accounts"],
+    }),
 
-
+    // CATEGORIES
     getCategories: build.query({
       query: ({ mainCategory }) => ({
         url: "categories",
@@ -117,7 +152,6 @@ export const api = createApi({
       query: () => "categories/main",
       providesTags: ["MainCategories"],
     }),
-
 
     getCustomers: build.query({
       query: () => "client/customers",
@@ -161,9 +195,13 @@ export const {
   useGetCategoriesStatisticsQuery,
   useGetMonthlyStatisticsQuery,
   useGetRulesQuery,
-  useAddNewRuleMutation,
+  useCreateRuleMutation,
   useDeleteRuleMutation,
-  useEditRuleMutation,
+  useUpdateRuleMutation,
+  useGetAccountsQuery,
+  useCreateAccountMutation,
+  useDeleteAccountMutation,
+  useUpdateAccountMutation,
   useGetCategoriesQuery,
   useGetMainCategoriesQuery,
 } = api;

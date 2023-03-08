@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, useTheme } from "@mui/material";
 
-const ContainedButton = ({
+const ButtonWIcon = ({
   text,
   icon,
   onClick,
@@ -30,4 +30,4 @@ const ContainedButton = ({
   );
 };
 
-export default ContainedButton;
+export default ButtonWIcon;

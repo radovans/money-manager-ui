@@ -2,17 +2,17 @@ import { Alert, AlertTitle, Box, Snackbar } from "@mui/material";
 import React from "react";
 
 const CrudSnackbar = ({
-  addStatus,
-  editStatus,
+  createStatus,
+  updateStatus,
   deleteStatus,
   handleCloseSnackbar,
-  entity,
+  entityName,
 }) => {
   return (
     <Box>
-      {/* ADD */}
+      {/* CREATE */}
       <Snackbar
-        open={addStatus === "success"}
+        open={createStatus === "success"}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
       >
@@ -23,11 +23,11 @@ const CrudSnackbar = ({
           sx={{ width: "100%" }}
         >
           <AlertTitle>Success</AlertTitle>
-          {entity} saved!
+          {entityName} saved!
         </Alert>
       </Snackbar>
       <Snackbar
-        open={addStatus === "error"}
+        open={createStatus === "error"}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
       >
@@ -38,13 +38,13 @@ const CrudSnackbar = ({
           sx={{ width: "100%" }}
         >
           <AlertTitle>Error</AlertTitle>
-          Error while saving {entity}!
+          Error while saving {entityName}!
         </Alert>
       </Snackbar>
 
       {/* EDIT */}
       <Snackbar
-        open={editStatus === "success"}
+        open={updateStatus === "success"}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
       >
@@ -55,11 +55,11 @@ const CrudSnackbar = ({
           sx={{ width: "100%" }}
         >
           <AlertTitle>Success</AlertTitle>
-          {entity} updated!
+          {entityName} updated!
         </Alert>
       </Snackbar>
       <Snackbar
-        open={editStatus === "error"}
+        open={updateStatus === "error"}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
       >
@@ -70,7 +70,7 @@ const CrudSnackbar = ({
           sx={{ width: "100%" }}
         >
           <AlertTitle>Error</AlertTitle>
-          Error while updating {entity}!
+          Error while updating {entityName}!
         </Alert>
       </Snackbar>
 
@@ -87,7 +87,7 @@ const CrudSnackbar = ({
           sx={{ width: "100%" }}
         >
           <AlertTitle>Success</AlertTitle>
-          {entity} deleted!
+          {entityName} deleted!
         </Alert>
       </Snackbar>
       <Snackbar
@@ -102,7 +102,7 @@ const CrudSnackbar = ({
           sx={{ width: "100%" }}
         >
           <AlertTitle>Error</AlertTitle>
-          Error while deleting {entity}!
+          Error while deleting {entityName}!
         </Alert>
       </Snackbar>
     </Box>

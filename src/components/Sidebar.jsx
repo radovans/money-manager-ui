@@ -25,6 +25,7 @@ import {
   ExpandMore,
   TableRowsOutlined,
   SettingsOutlined,
+  AccountBalanceOutlined,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -65,6 +66,10 @@ const settingsItems = [
   {
     text: "Rules",
     icon: <RuleOutlined />,
+  },
+  {
+    text: "Accounts",
+    icon: <AccountBalanceOutlined />,
   },
   {
     text: "Import",

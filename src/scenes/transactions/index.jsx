@@ -10,7 +10,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import TextField from "@mui/material/TextField";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { SxProps } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 
 const Transactions = () => {
@@ -99,7 +98,7 @@ const Transactions = () => {
     },
   ];
 
-  const popperSx: SxProps = {
+  const popperSx = {
     "& .MuiCalendarPicker-root": {
       backgroundColor: theme.palette.primary[800],
     },
@@ -137,7 +136,7 @@ const Transactions = () => {
               clearable
               renderInput={(params) => <TextField {...params} />}
               PopperProps={{
-                sx: popperSx,
+                sx: {popperSx},
               }}
             />
           </LocalizationProvider>

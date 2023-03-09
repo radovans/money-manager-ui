@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
 import {
-  useCreateRuleMutation,
-  useDeleteRuleMutation,
-  useUpdateRuleMutation,
-  useGetRulesQuery,
+  useGetAccountsQuery,
+  useCreateAccountMutation,
+  useUpdateAccountMutation,
+  useDeleteAccountMutation,
 } from "state/api";
 import Header from "components/Header";
 import FlexBetween from "components/FlexBetween";
 import CrudDatagridActions from "components/crudDatagrid/CrudDatagridActions";
 import CrudDatagridTable from "components/crudDatagrid/CrudDatagridTable";
-import RuleInputForm from "components/crudDatagrid/inputForms/RuleInputForm";
 import CrudDatagridActionUpdate from "components/crudDatagrid/CrudDatagridActionUpdate";
 import CrudDatagridActionCreate from "components/crudDatagrid/CrudDatagridActionCreate";
 import CrudDatagridActionDelete from "components/crudDatagrid/CrudDatagridActionDelete";
+import AccountInputForm from "components/crudDatagrid/inputForms/AccountInputForm";
 
-const Rules = () => {
-  const entityName = "RULES";
+const Accounts = () => {
+  const entityName = "Account";
 
   // ROW SELECT
   const [selectedRow, setSelectedRow] = useState();
@@ -28,61 +28,33 @@ const Rules = () => {
       setUpdateInput({
         ...updateInput,
         id: rowData.id,
-        key: rowData.key,
-        type: rowData.type,
-        skipTransaction: rowData.skipTransaction,
-        recipient: rowData.recipient,
-        note: rowData.note,
-        mainCategory: rowData.mainCategory,
-        category: rowData.category,
-        label: rowData.label,
+        name: rowData.name,
       });
     }
   };
 
   // INPUTS
   const [createInput, setCreateInput] = useState({
-    key: "",
-    type: "NOTE",
-    skipTransaction: false,
-    recipient: "",
-    note: "",
-    mainCategory: "",
-    category: "",
-    label: "",
+    name: "",
   });
 
   const [updateInput, setUpdateInput] = useState({
     id: selectedRow && selectedRow.id,
-    key: selectedRow && selectedRow.key,
-    type: selectedRow && selectedRow.type,
-    skipTransaction: selectedRow && selectedRow.skipTransaction,
-    recipient: selectedRow && selectedRow.recipient,
-    note: selectedRow && selectedRow.note,
-    mainCategory: selectedRow && selectedRow.mainCategory,
-    category: selectedRow && selectedRow.category,
-    label: selectedRow && selectedRow.label,
+    name: selectedRow && selectedRow.name,
   });
 
   const handleClearInput = () => {
     setCreateInput({
       ...createInput,
-      key: "",
-      type: "NOTE",
-      skipTransaction: false,
-      recipient: "",
-      note: "",
-      mainCategory: "",
-      category: "",
-      label: "",
+      name: "",
     });
   };
 
   // QUERIES
-  const { data, isLoading } = useGetRulesQuery();
-  const [createQuery] = useCreateRuleMutation();
-  const [updateQuery] = useUpdateRuleMutation();
-  const [deleteQuery] = useDeleteRuleMutation();
+  const { data, isLoading } = useGetAccountsQuery();
+  const [createQuery] = useCreateAccountMutation();
+  const [updateQuery] = useUpdateAccountMutation();
+  const [deleteQuery] = useDeleteAccountMutation();
 
   const columns = [
     {
@@ -92,50 +64,8 @@ const Rules = () => {
       sortable: false,
     },
     {
-      field: "type",
-      headerName: "Type",
-      flex: 0.5,
-      sortable: false,
-    },
-    {
-      field: "key",
-      headerName: "Key",
-      flex: 0.5,
-      sortable: false,
-    },
-    {
-      field: "skipTransaction",
-      headerName: "Skip transaction",
-      flex: 0.5,
-      sortable: false,
-    },
-    {
-      field: "recipient",
-      headerName: "Recipient",
-      flex: 0.5,
-      sortable: false,
-    },
-    {
-      field: "note",
-      headerName: "Note",
-      flex: 1,
-      sortable: false,
-    },
-    {
-      field: "mainCategory",
-      headerName: "Main category",
-      flex: 0.5,
-      sortable: false,
-    },
-    {
-      field: "category",
-      headerName: "Category",
-      flex: 0.5,
-      sortable: false,
-    },
-    {
-      field: "label",
-      headerName: "Label",
+      field: "name",
+      headerName: "Name",
       flex: 0.5,
       sortable: false,
     },
@@ -144,7 +74,7 @@ const Rules = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="RULE" subtitle="Rules management" />
+        <Header title="ACCOUNTS" subtitle="Accounts management" />
         <CrudDatagridActions
           createAction={
             <CrudDatagridActionCreate
@@ -154,7 +84,7 @@ const Rules = () => {
               setCreateInput={setCreateInput}
               handleClearInput={handleClearInput}
               Form={
-                <RuleInputForm data={createInput} setData={setCreateInput} />
+                <AccountInputForm data={createInput} setData={setCreateInput} />
               }
             />
           }
@@ -167,7 +97,7 @@ const Rules = () => {
               setUpdateInput={setUpdateInput}
               handleClearInput={handleClearInput}
               Form={
-                <RuleInputForm data={updateInput} setData={setUpdateInput} />
+                <AccountInputForm data={updateInput} setData={setUpdateInput} />
               }
             />
           }
@@ -190,4 +120,4 @@ const Rules = () => {
   );
 };
 
-export default Rules;
+export default Accounts;

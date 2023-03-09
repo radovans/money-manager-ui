@@ -5,13 +5,7 @@ export const api = createApi({
   reducerPath: "adminApi",
   tagTypes: [
     "User",
-    "Products",
-    "Customers",
     "Transactions",
-    "Geography",
-    "Sales",
-    "Admins",
-    "Performance",
     "Dashboard",
     "YearlyStatistics",
     "MonthlyStatistics",
@@ -19,7 +13,6 @@ export const api = createApi({
     "CategoriesStatistics",
     "Rules",
     "Accounts",
-    "RemoveRule",
     "Categories",
     "MainCategories",
   ],
@@ -28,6 +21,7 @@ export const api = createApi({
       query: (id) => `users/${id}`,
       providesTags: ["User"],
     }),
+
     getTransactions: build.query({
       query: ({ page, size, sort, search, from, to, category }) => ({
         url: "transactions",
@@ -36,10 +30,13 @@ export const api = createApi({
       }),
       providesTags: ["Transactions"],
     }),
+
     getDashboard: build.query({
       query: () => "statistics",
       providesTags: ["Dashboard"],
     }),
+
+    // STATISTICS
     getYearlyStatistics: build.query({
       query: ({ salaryOnly }) => ({
         url: "statistics/year-month/year",
@@ -152,43 +149,12 @@ export const api = createApi({
       query: () => "categories/main",
       providesTags: ["MainCategories"],
     }),
-
-    getCustomers: build.query({
-      query: () => "client/customers",
-      providesTags: ["Customers"],
-    }),
-    getProducts: build.query({
-      query: () => "client/products",
-      providesTags: ["Products"],
-    }),
-    getGeography: build.query({
-      query: () => "client/geography",
-      providesTags: ["Geography"],
-    }),
-    getSales: build.query({
-      query: () => "sales/sales",
-      providesTags: ["Sales"],
-    }),
-    getAdmins: build.query({
-      query: () => "management/admins",
-      providesTags: ["Admins"],
-    }),
-    getUserPerformance: build.query({
-      query: (id) => `management/performance/${id}`,
-      providesTags: ["Performance"],
-    }),
   }),
 });
 
 export const {
   useGetUserQuery,
-  useGetProductsQuery,
-  useGetCustomersQuery,
   useGetTransactionsQuery,
-  useGetGeographyQuery,
-  useGetSalesQuery,
-  useGetAdminsQuery,
-  useGetUserPerformanceQuery,
   useGetDashboardQuery,
   useGetYearlyStatisticsQuery,
   useGetMainCategoriesStatisticsQuery,

@@ -3,7 +3,7 @@ import { Backdrop, Box, Fade, Modal } from "@mui/material";
 import ButtonWIcon from "components/ButtonWIcon";
 import CreateModal from "./CreateModal";
 import { AddOutlined } from "@mui/icons-material";
-import CrudSnackbar from "components/CrudSnackbar";
+import CrudSnackbar from "components/crudDatagrid/CrudSnackbar";
 
 const CrudDatagridActionCreate = (props) => {
   const icons = {

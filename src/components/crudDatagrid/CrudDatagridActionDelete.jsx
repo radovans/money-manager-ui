@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
 import ButtonWIcon from "components/ButtonWIcon";
-import CrudSnackbar from "components/CrudSnackbar";
+import CrudSnackbar from "components/crudDatagrid/CrudSnackbar";
 import { DeleteOutline } from "@mui/icons-material";
 
 const CrudDatagridActionDelete = (props) => {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Backdrop, Box, Fade, Modal } from "@mui/material";
 import ButtonWIcon from "components/ButtonWIcon";
-import CrudSnackbar from "components/CrudSnackbar";
+import CrudSnackbar from "components/crudDatagrid/CrudSnackbar";
 import { EditOutlined } from "@mui/icons-material";
 import UpdateModal from "./UpdateModal";
 

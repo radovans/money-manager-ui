@@ -1,15 +1,9 @@
 import React from "react";
 import { Button, useTheme } from "@mui/material";
 
-const ButtonWIcon = ({
-  text,
-  icon,
-  onClick,
-  disabled = false,
-  marginLeft,
-}) => {
+const ButtonWIcon = ({ text, icon, onClick, disabled = false, link }) => {
   const theme = useTheme();
-
+  console.log(link);
   return (
     <Button
       sx={{
@@ -18,7 +12,6 @@ const ButtonWIcon = ({
         fontSize: "14px",
         fontWeight: "bold",
         padding: "10px 20px",
-        ml: { marginLeft },
       }}
       onClick={onClick}
       variant="contained"
@@ -26,6 +19,7 @@ const ButtonWIcon = ({
     >
       {icon}
       {text}
+      {link}
     </Button>
   );
 };

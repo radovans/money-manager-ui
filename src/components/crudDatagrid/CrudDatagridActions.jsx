@@ -7,6 +7,7 @@ const CrudDatagridActions = (props) => {
       {props.createAction}
       {props.updateAction}
       {props.deleteAction}
+      {props.downloadAction}
     </FlexBetween>
   );
 };

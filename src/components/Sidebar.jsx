@@ -26,6 +26,7 @@ import {
   TableRowsOutlined,
   SettingsOutlined,
   AccountBalanceOutlined,
+  AccountTreeOutlined,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -53,7 +54,7 @@ const graphsItems = [
     icon: <TrendingDownOutlined />,
   },
   {
-    text: "Categories",
+    text: "By Category",
     icon: <BarChartOutlined />,
   },
   {
@@ -70,6 +71,14 @@ const settingsItems = [
   {
     text: "Accounts",
     icon: <AccountBalanceOutlined />,
+  },
+  {
+    text: "Categories",
+    icon: <AccountTreeOutlined />,
+  },
+  {
+    text: "Subcategories",
+    icon: <AccountTreeOutlined />,
   },
   {
     text: "Import",
@@ -266,7 +275,7 @@ const Sidebar = ({
                 </List>
               </Collapse>
             </List>
-            <Box m="7.5rem 2rem 2rem 3rem">
+            <Box m="3.5rem 2rem 2rem 3rem">
               <FlexBetween color={theme.palette.secondary.main}>
                 <Box display="flex" alignItems="center" gap="0.5rem">
                   <Typography variant="h6">version 1.1</Typography>

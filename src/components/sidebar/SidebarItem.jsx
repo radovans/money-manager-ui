@@ -8,7 +8,7 @@ const SidebarItem = ({ navigate, setActive, text, lcText, active, icon, ml = "2r
     <ListItem key={text} disablePadding>
       <ListItemButton
         onClick={() => {
-          navigate(`/${lcText}`);
+          navigate(`/${lcText.replace(" ", "-")}`);
           setActive(lcText);
         }}
         sx={{

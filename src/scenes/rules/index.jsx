@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Button, Fade, Tooltip, Typography } from "@mui/material";
 import {
   useCreateRuleMutation,
   useDeleteRuleMutation,
@@ -14,6 +14,7 @@ import RuleInputForm from "components/crudDatagrid/inputForms/RuleInputForm";
 import CrudDatagridActionUpdate from "components/crudDatagrid/CrudDatagridActionUpdate";
 import CrudDatagridActionCreate from "components/crudDatagrid/CrudDatagridActionCreate";
 import CrudDatagridActionDelete from "components/crudDatagrid/CrudDatagridActionDelete";
+import CrudDatagridActionDownload from "components/crudDatagrid/CrudDatagridActionDownload";
 
 const Rules = () => {
   const entityName = "RULES";
@@ -144,7 +145,25 @@ const Rules = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="RULE" subtitle="Rules management" />
+        <Tooltip
+          TransitionComponent={Fade}
+          TransitionProps={{ timeout: 600 }}
+          title={
+            <Typography fontSize={14}>
+              Rules are used to categorize expenses from bank account statement
+              based on the note or recipient fields. If the rule matches the
+              criteria, then it will apply predefined recipient, note, category,
+              subcategory and label. This rules can be used to quickly sort
+              expenses.
+            </Typography>
+          }
+          placement="bottom-start"
+        >
+          <Box>
+            <Header title="RULE" subtitle="Rules management" />
+          </Box>
+        </Tooltip>
+
         <CrudDatagridActions
           createAction={
             <CrudDatagridActionCreate
@@ -177,6 +196,9 @@ const Rules = () => {
               deleteQuery={deleteQuery}
               selectedRow={selectedRow}
             />
+          }
+          downloadAction={
+            <CrudDatagridActionDownload link={"http://localhost:8088/rules"} />
           }
         />
       </FlexBetween>

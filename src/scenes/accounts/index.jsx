@@ -60,7 +60,7 @@ const Accounts = () => {
     {
       field: "id",
       headerName: "ID",
-      flex: 0.15,
+      flex: 0.03,
       sortable: false,
     },
     {

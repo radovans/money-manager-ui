@@ -29,14 +29,16 @@ function App() {
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/transactions" element={<Transactions />} />
-              <Route path="/rules" element={<Rules />} />
-              <Route path="/accounts" element={<Accounts />} />
-              <Route path="/import" element={<Import />} />
               <Route path="/balance" element={<Balance />} />
               <Route path="/incomes" element={<Incomes />} />
               <Route path="/expenses" element={<Expenses />} />
-              <Route path="/categories" element={<Categories />} />
+              <Route path="/by-category" element={<Categories />} />
               <Route path="/cumulative" element={<Cumulative />} />
+              <Route path="/rules" element={<Rules />} />
+              <Route path="/accounts" element={<Accounts />} />
+              <Route path="/categories" element={<Accounts />} />
+              <Route path="/subcategories" element={<Accounts />} />
+              <Route path="/import" element={<Import />} />
             </Route>
           </Routes>
         </ThemeProvider>

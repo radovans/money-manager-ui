@@ -26,17 +26,19 @@ const BalanceBox = ({
       borderRadius="0.55rem"
     >
       <FlexBetween>
-        <AccountBalanceWalletOutlinedIcon
-          sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
-        />
-        <Typography
-          variant="h4"
-          fontWeight="bold"
-          style={{ marginTop: "0.3rem", marginLeft: "-20rem" }}
-          sx={{ color: theme.palette.secondary[300] }}
-        >
-          {title}
-        </Typography>
+        <Box flexDirection="row" alignItems="left" display="flex">
+          <AccountBalanceWalletOutlinedIcon
+            sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
+          />
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            style={{ marginTop: "0.3rem", marginLeft: "0.5rem" }}
+            sx={{ color: theme.palette.secondary[300] }}
+          >
+            {title}
+          </Typography>
+        </Box>
         <ProgressCircle progress={progress} />
       </FlexBetween>
 

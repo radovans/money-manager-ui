@@ -5,7 +5,7 @@ import { DownloadOutlined } from "@mui/icons-material";
 import { Box, Button, useTheme, useMediaQuery } from "@mui/material";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import DashboardTransactions from "components/DashboardTransactions";
-import { useGetDashboardQuery } from "state/api";
+import { useGetDashboardQuery, useGetYearlyStatisticsQuery } from "state/api";
 import StatBox from "components/StatBox";
 import BalanceBox from "components/BalanceBox";
 import YearlyBalanceLineChart from "components/charts/YearlyBalanceLineChart";
@@ -17,6 +17,10 @@ const Dashboard = () => {
 
   const { data } = useGetDashboardQuery();
   
+  const { data : yearlyStatistics, isLoading } = useGetYearlyStatisticsQuery({
+    salaryOnly: false
+  });
+
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
@@ -63,7 +67,7 @@ const Dashboard = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-          <YearlyBalanceLineChart isDashboard={true} />
+          <YearlyBalanceLineChart data={yearlyStatistics} isLoading={isLoading} isDashboard={true} />
         </Box>
         <StatBox
           title="Year to date"

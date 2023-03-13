@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Fade, Tooltip, Typography } from "@mui/material";
+import { Box, Fade, Tooltip, Typography } from "@mui/material";
 import {
   useCreateRuleMutation,
   useDeleteRuleMutation,

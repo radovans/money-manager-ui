@@ -10,7 +10,6 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { useGetYearlyStatisticsQuery } from "state/api";
 import { Box, CircularProgress, useTheme } from "@mui/material";
 
 ChartJS.register(
@@ -23,11 +22,8 @@ ChartJS.register(
   ChartDataLabels
 );
 
-const YearlyIncomesLineChart = ({ isDashboard = false, salaryOnly = false }) => {
+const YearlyIncomesLineChart = ({ data, isLoading, isDashboard = false, salaryOnly = false }) => {
   const theme = useTheme();
-  const { data, isLoading } = useGetYearlyStatisticsQuery({
-    salaryOnly
-  });
 
   if (!data || isLoading)
     return (

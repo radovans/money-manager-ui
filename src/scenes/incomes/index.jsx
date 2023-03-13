@@ -9,6 +9,7 @@ import {
 import Header from "components/Header";
 import YearlyIncomesLineChart from "components/charts/YearlyIncomesLineChart";
 import FlexBetween from "components/FlexBetween";
+import { useGetYearlyStatisticsQuery } from "state/api";
 
 const Incomes = () => {
   const theme = useTheme();
@@ -19,6 +20,10 @@ const Incomes = () => {
   const handleSalaryOnlyChange = (event) => {
     setSalaryOnlyChecked(event.target.checked);
   };
+
+  const { data, isLoading } = useGetYearlyStatisticsQuery({
+    salaryOnlyChecked
+  });
 
   return (
     <Box m="1.5rem 2.5rem">
@@ -47,7 +52,7 @@ const Incomes = () => {
           p="1.5rem"
           borderRadius="0.55rem"
         >
-          <YearlyIncomesLineChart salaryOnly={salaryOnlyChecked}/>
+          <YearlyIncomesLineChart data={data} isLoading={isLoading} salaryOnly={salaryOnlyChecked}/>
         </Box>
       </Box>
     </Box>

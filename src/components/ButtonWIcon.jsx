@@ -3,7 +3,6 @@ import { Button, useTheme } from "@mui/material";
 
 const ButtonWIcon = ({ text, icon, onClick, disabled = false, link }) => {
   const theme = useTheme();
-  console.log(link);
   return (
     <Button
       sx={{

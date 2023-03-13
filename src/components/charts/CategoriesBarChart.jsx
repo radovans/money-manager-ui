@@ -1,15 +1,23 @@
 import React, { useState } from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
-import ChartDataLabels from "chartjs-plugin-datalabels";
+import {
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 import { useGetCategoriesStatisticsQuery } from "state/api";
 import { Box, CircularProgress, useTheme } from "@mui/material";
 
-ChartJS.register(Tooltip, Legend, ChartDataLabels, ArcElement);
+ChartJS.register(CategoryScale, LinearScale, BarElement);
 
-const MainCategoriesDonutChart = ({ isDashboard = false, from, to }) => {
+const CategoriesBarChart = ({
+  isDashboard = false,
+  from,
+  to,
+  childToParent,
+}) => {
   const theme = useTheme();
-  const [value, setValue] = useState();
   const [category, setCategory] = useState();
 
   const { data, isLoading } = useGetCategoriesStatisticsQuery({
@@ -24,7 +32,7 @@ const MainCategoriesDonutChart = ({ isDashboard = false, from, to }) => {
         display="flex"
         alignItems="center"
         justifyContent="center"
-        height={isDashboard ? 290 : 650}
+        height={650}
       >
         <CircularProgress />
       </Box>
@@ -34,7 +42,8 @@ const MainCategoriesDonutChart = ({ isDashboard = false, from, to }) => {
     labels: data?.categories?.map((x) => x.name),
     datasets: [
       {
-        data: data?.categories?.map((x) => x.percentage),
+        label: "Main categories",
+        data: data?.categories?.map((x) => x.amountAbs),
         backgroundColor: [
           theme.palette.chart_opacity[100],
           theme.palette.chart_opacity[200],
@@ -58,51 +67,65 @@ const MainCategoriesDonutChart = ({ isDashboard = false, from, to }) => {
           theme.palette.chart[900],
         ],
         borderWidth: 2,
-        cutout: "50%",
+        barThickness: 30,
+        maxBarThickness: 30,
+        categoryPercentage: 1.0,
+        barPercentage: 1.0
       },
     ],
   };
 
   var options = {
-    onHover(click, element, chart) {
-      if (element.length === 1) {
-        setValue(data?.categories[element[0].index].amountAbsFormatted);
-      }
-    },
     onClick(click, element, chart) {
       if (element.length === 1) {
         if (data?.categories[element[0].index].isSubcategory) {
           setCategory();
+          childToParent();
         } else {
           setCategory(data?.categories[element[0].index].name);
+          childToParent(data?.categories[element[0].index].name);
         }
       }
     },
+    indexAxis: "y",
+    barValueSpacing : 0.2,
+    barDatasetSpacing : 0.2,
     maintainAspectRatio: false,
-    tooltips: {
-      enabled: false,
-    },
-    plugins: {
-      legend: {
-        display: true,
-        position: "chartArea",
-        labels: {
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
           font: {
             family: theme.typography.fontFamily,
             size: isDashboard
               ? theme.typography.fontSizeChartSmall
               : theme.typography.fontSizeChartMedium,
           },
-          padding: isDashboard ? 10 : 18,
-          usePointStyle: true,
-          pointStyle: "circle",
           color: "#ffffff",
         },
+      },
+      x: {
+        ticks: {
+          font: {
+            family: theme.typography.fontFamily,
+            size: isDashboard
+              ? theme.typography.fontSizeChartSmall
+              : theme.typography.fontSizeChartMedium,
+          },
+          display: isDashboard ? false : true,
+          color: "#ffffff",
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
       },
       datalabels: {
         color: "white",
         anchor: "center",
         display: "auto",
+        clip: true,
         font: {
           family: theme.typography.fontFamily,
           size: isDashboard
@@ -131,38 +154,37 @@ const MainCategoriesDonutChart = ({ isDashboard = false, from, to }) => {
             ? theme.typography.fontSizeChartSmall
             : theme.typography.fontSizeChartMedium,
         },
+        callbacks: {
+          label: function (context) {
+            let label = context.dataset.label || "";
+
+            if (label) {
+              label += ": ";
+            }
+            if (context.parsed.y !== null) {
+              label =
+                " " +
+                new Intl.NumberFormat("cs-CZ", {
+                  style: "currency",
+                  currency: "CZK",
+                }).format(context.parsed.x);
+            }
+            return label;
+          },
+        },
       },
     },
   };
 
   return (
-    <div style={{ position: "relative" }}>
-      <Doughnut
+    <div>
+      <Bar
         data={chartData}
-        height={isDashboard ? 290 : 650}
+        height={isDashboard ? 400 : 650}
         options={options}
       />
-      {isDashboard ? (
-        ""
-      ) : (
-        <div
-          style={{
-            position: "absolute",
-            width: "100%",
-            top: "50%",
-            left: 0,
-            textAlign: "center",
-            marginTop: "-0.5%",
-            lineHeight: "20px",
-            fontSize: "16px",
-            fontWeight: "bold",
-          }}
-        >
-          {value ? <span>{value}</span> : <span>{data?.totalFormatted}</span>}
-        </div>
-      )}
     </div>
   );
 };
 
-export default MainCategoriesDonutChart;
+export default CategoriesBarChart;

@@ -62,14 +62,14 @@ const DashboardTransactions = () => {
       sortable: false,
     },
     {
-      field: "mainCategory",
-      headerName: "Main category",
+      field: "category",
+      headerName: "Category",
       flex: 0.5,
       sortable: false,
     },
     {
-      field: "category",
-      headerName: "Category",
+      field: "subcategory",
+      headerName: "Subcategory",
       flex: 0.5,
       sortable: false,
     },

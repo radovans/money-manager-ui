@@ -11,10 +11,10 @@ import {
   Typography,
 } from "@mui/material";
 import Header from "components/Header";
-import MainCategoriesBarChart from "components/charts/MainCategoriesBarChart";
-import MainCategoriesDonutChart from "components/charts/MainCategoriesDonutChart";
 import CategoriesTransactions from "components/CategoriesTransactions";
 import DateRangePicker from "components/DateRangePicker";
+import CategoriesBarChart from "components/charts/CategoriesBarChart";
+import CategoriesDonutChart from "components/charts/CategoriesDonutChart";
 
 const Categories = () => {
   const theme = useTheme();
@@ -77,14 +77,14 @@ const Categories = () => {
           {
             {
               barChart: (
-                <MainCategoriesBarChart
+                <CategoriesBarChart
                   from={from}
                   to={to}
                   childToParent={childToParent}
                 />
               ),
               pieChart: (
-                <MainCategoriesDonutChart
+                <CategoriesDonutChart
                   isDashboard={false}
                   from={from}
                   to={to}

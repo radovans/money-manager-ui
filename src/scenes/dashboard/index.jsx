@@ -9,7 +9,7 @@ import { useGetDashboardQuery, useGetYearlyStatisticsQuery } from "state/api";
 import StatBox from "components/StatBox";
 import BalanceBox from "components/BalanceBox";
 import YearlyBalanceLineChart from "components/charts/YearlyBalanceLineChart";
-import MainCategoriesDonutChart from "components/charts/MainCategoriesDonutChart";
+import CategoriesDonutChart from "components/charts/CategoriesDonutChart";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -110,7 +110,7 @@ const Dashboard = () => {
           p="1.5rem"
           borderRadius="0.55rem"
         >
-          <MainCategoriesDonutChart isDashboard={true} />
+          <CategoriesDonutChart isDashboard={true} />
         </Box>
       </Box>
     </Box>

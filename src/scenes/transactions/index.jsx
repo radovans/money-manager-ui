@@ -18,9 +18,6 @@ const Transactions = () => {
   const [from, setFrom] = useState();
   const [to, setTo] = useState();
 
-  console.log(from);
-  console.log(to);
-
   const [searchInput, setSearchInput] = useState("");
   const { data, isLoading, isError } = useGetTransactionsQuery({
     page,
@@ -77,14 +74,14 @@ const Transactions = () => {
       sortable: false,
     },
     {
-      field: "mainCategory",
-      headerName: "Main category",
+      field: "category",
+      headerName: "Category",
       flex: 0.5,
       sortable: false,
     },
     {
-      field: "category",
-      headerName: "Category",
+      field: "subcategory",
+      headerName: "Subcategory",
       flex: 0.5,
       sortable: false,
     },

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import Field from "components/Field";
 import DropdownField from "components/DropdownField";
-import { useGetCategoriesQuery, useGetMainCategoriesQuery } from "state/api";
+import { useGetCategoriesQuery, useGetSubcategoriesQuery,  } from "state/api";
 
 const RuleInputForm = (props) => {
   //  Skip switch
@@ -18,20 +18,20 @@ const RuleInputForm = (props) => {
       skipTransaction: event.target.checked,
       recipient: "",
       note: "",
-      mainCategory: "",
       category: "",
+      subcategory: "",
       label: "",
     });
   };
 
   //   Fetch categories
-  const { data: categories } = useGetCategoriesQuery({
-    mainCategory: props.data.mainCategory,
+  const { data: subcategories } = useGetSubcategoriesQuery({
+    category: props.data.category,
     forceRefetch: true,
   });
 
   //   Fetch main categories
-  const { data: mainCategories } = useGetMainCategoriesQuery({
+  const { data: categories } = useGetCategoriesQuery({
     forceRefetch: true,
   });
 
@@ -91,20 +91,20 @@ const RuleInputForm = (props) => {
             }
           />
           <DropdownField
-            label="Main Category"
-            value={props.data.mainCategory}
-            onChange={(e) =>
-              props.setData({ ...props.data, mainCategory: e.target.value })
-            }
-            values={mainCategories}
-          />
-          <DropdownField
             label="Category"
             value={props.data.category}
             onChange={(e) =>
               props.setData({ ...props.data, category: e.target.value })
             }
             values={categories}
+          />
+          <DropdownField
+            label="Subcategory"
+            value={props.data.subcategory}
+            onChange={(e) =>
+              props.setData({ ...props.data, subcategory: e.target.value })
+            }
+            values={subcategories}
           />
           <Field
             label="Label"

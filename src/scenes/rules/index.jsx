@@ -34,8 +34,8 @@ const Rules = () => {
         skipTransaction: rowData.skipTransaction,
         recipient: rowData.recipient,
         note: rowData.note,
-        mainCategory: rowData.mainCategory,
         category: rowData.category,
+        subcategory: rowData.subcategory,
         label: rowData.label,
       });
     }
@@ -48,8 +48,8 @@ const Rules = () => {
     skipTransaction: false,
     recipient: "",
     note: "",
-    mainCategory: "",
     category: "",
+    subcategory: "",
     label: "",
   });
 
@@ -60,8 +60,8 @@ const Rules = () => {
     skipTransaction: selectedRow && selectedRow.skipTransaction,
     recipient: selectedRow && selectedRow.recipient,
     note: selectedRow && selectedRow.note,
-    mainCategory: selectedRow && selectedRow.mainCategory,
     category: selectedRow && selectedRow.category,
+    subcategory: selectedRow && selectedRow.subcategory,
     label: selectedRow && selectedRow.label,
   });
 
@@ -73,8 +73,8 @@ const Rules = () => {
       skipTransaction: false,
       recipient: "",
       note: "",
-      mainCategory: "",
       category: "",
+      subcategory: "",
       label: "",
     });
   };
@@ -123,14 +123,14 @@ const Rules = () => {
       sortable: false,
     },
     {
-      field: "mainCategory",
-      headerName: "Main category",
+      field: "category",
+      headerName: "Category",
       flex: 0.5,
       sortable: false,
     },
     {
-      field: "category",
-      headerName: "Category",
+      field: "subcategory",
+      headerName: "Subcategory",
       flex: 0.5,
       sortable: false,
     },

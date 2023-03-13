@@ -9,12 +9,11 @@ export const api = createApi({
     "Dashboard",
     "YearlyStatistics",
     "MonthlyStatistics",
-    "MainCategoriesStatistics",
     "CategoriesStatistics",
     "Rules",
     "Accounts",
     "Categories",
-    "MainCategories",
+    "Subcategories",
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -48,14 +47,6 @@ export const api = createApi({
     getMonthlyStatistics: build.query({
       query: () => "statistics/year-month/all",
       providesTags: ["MonthlyStatistics"],
-    }),
-    getMainCategoriesStatistics: build.query({
-      query: ({ from, to }) => ({
-        url: "statistics/main-categories",
-        method: "GET",
-        params: { from, to },
-      }),
-      providesTags: ["MainCategoriesStatistics"],
     }),
     getCategoriesStatistics: build.query({
       query: ({ from, to, category }) => ({
@@ -137,17 +128,17 @@ export const api = createApi({
     }),
 
     // CATEGORIES
-    getCategories: build.query({
-      query: ({ mainCategory }) => ({
-        url: "categories",
+    getSubcategories: build.query({
+      query: ({ category }) => ({
+        url: "subcategories",
         method: "GET",
-        params: { mainCategory },
+        params: { category },
       }),
       providesTags: ["Categories"],
     }),
-    getMainCategories: build.query({
-      query: () => "categories/main",
-      providesTags: ["MainCategories"],
+    getCategories: build.query({
+      query: () => "categories",
+      providesTags: ["Categories"],
     }),
   }),
 });
@@ -157,7 +148,6 @@ export const {
   useGetTransactionsQuery,
   useGetDashboardQuery,
   useGetYearlyStatisticsQuery,
-  useGetMainCategoriesStatisticsQuery,
   useGetCategoriesStatisticsQuery,
   useGetMonthlyStatisticsQuery,
   useGetRulesQuery,
@@ -168,6 +158,6 @@ export const {
   useCreateAccountMutation,
   useDeleteAccountMutation,
   useUpdateAccountMutation,
+  useGetSubcategoriesQuery,
   useGetCategoriesQuery,
-  useGetMainCategoriesQuery,
 } = api;

@@ -10,11 +10,13 @@ import Transactions from "scenes/transactions";
 import Balance from "scenes/balance";
 import Incomes from "scenes/incomes"
 import Expenses from "scenes/expenses"
-import Categories from "scenes/categories"
+import ByCategory from "scenes/by-category"
 import Cumulative from "scenes/cumulative";
 import Import from "scenes/import";
 import Rules from "scenes/rules";
 import Accounts from "scenes/accounts";
+import Categories from "scenes/categories";
+import Subcategories from "scenes/subcategories";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -32,12 +34,12 @@ function App() {
               <Route path="/balance" element={<Balance />} />
               <Route path="/incomes" element={<Incomes />} />
               <Route path="/expenses" element={<Expenses />} />
-              <Route path="/by-category" element={<Categories />} />
+              <Route path="/by-category" element={<ByCategory />} />
               <Route path="/cumulative" element={<Cumulative />} />
               <Route path="/rules" element={<Rules />} />
               <Route path="/accounts" element={<Accounts />} />
-              <Route path="/categories" element={<Accounts />} />
-              <Route path="/subcategories" element={<Accounts />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/subcategories" element={<Subcategories />} />
               <Route path="/import" element={<Import />} />
             </Route>
           </Routes>

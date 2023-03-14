@@ -128,17 +128,77 @@ export const api = createApi({
     }),
 
     // CATEGORIES
+    getCategories: build.query({
+      query: () => "categories",
+      providesTags: ["Categories"],
+    }),
+    createCategory: build.mutation({
+      query: (payload) => ({
+        url: "categories",
+        method: "POST",
+        body: payload,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }),
+      invalidatesTags: ["Categories"],
+    }),
+    updateCategory: build.mutation({
+      query: ({ id, payload }) => ({
+        url: `categories/${id}`,
+        method: "PUT",
+        body: payload,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }),
+      invalidatesTags: ["Categories"],
+    }),
+    deleteCategory: build.mutation({
+      query: (id) => ({
+        url: `categories/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Categories"],
+    }),
+
+    // SUBCATEGORIES
     getSubcategories: build.query({
       query: ({ category }) => ({
         url: "subcategories",
         method: "GET",
         params: { category },
       }),
-      providesTags: ["Categories"],
+      providesTags: ["Subcategories"],
     }),
-    getCategories: build.query({
-      query: () => "categories",
-      providesTags: ["Categories"],
+    createSubcategory: build.mutation({
+      query: (payload) => ({
+        url: "subcategories",
+        method: "POST",
+        body: payload,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }),
+      invalidatesTags: ["Subcategories"],
+    }),
+    updateSubcategory: build.mutation({
+      query: ({ id, payload }) => ({
+        url: `subcategories/${id}`,
+        method: "PUT",
+        body: payload,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }),
+      invalidatesTags: ["Subcategories"],
+    }),
+    deleteSubcategory: build.mutation({
+      query: (id) => ({
+        url: `subcategories/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Subcategories"],
     }),
   }),
 });
@@ -150,14 +210,24 @@ export const {
   useGetYearlyStatisticsQuery,
   useGetCategoriesStatisticsQuery,
   useGetMonthlyStatisticsQuery,
+
   useGetRulesQuery,
   useCreateRuleMutation,
   useDeleteRuleMutation,
   useUpdateRuleMutation,
+
   useGetAccountsQuery,
   useCreateAccountMutation,
   useDeleteAccountMutation,
   useUpdateAccountMutation,
-  useGetSubcategoriesQuery,
+
   useGetCategoriesQuery,
+  useCreateCategoryMutation,
+  useDeleteCategoryMutation,
+  useUpdateCategoryMutation,
+
+  useGetSubcategoriesQuery,
+  useCreateSubcategoryMutation,
+  useDeleteSubcategoryMutation,
+  useUpdateSubcategoryMutation,
 } = api;

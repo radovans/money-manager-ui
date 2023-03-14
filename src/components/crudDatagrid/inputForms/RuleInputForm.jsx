@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import Field from "components/Field";
 import DropdownField from "components/DropdownField";
-import { useGetCategoriesQuery, useGetSubcategoriesQuery,  } from "state/api";
+import { useGetCategoriesQuery, useGetSubcategoriesQuery } from "state/api";
 
 const RuleInputForm = (props) => {
   //  Skip switch
@@ -24,13 +24,13 @@ const RuleInputForm = (props) => {
     });
   };
 
-  //   Fetch categories
+  //   Fetch subcategories
   const { data: subcategories } = useGetSubcategoriesQuery({
     category: props.data.category,
     forceRefetch: true,
   });
 
-  //   Fetch main categories
+  //   Fetch categories
   const { data: categories } = useGetCategoriesQuery({
     forceRefetch: true,
   });

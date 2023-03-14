@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
 import {
-  useGetCategoriesQuery,
-  useCreateCategoryMutation,
-  useUpdateCategoryMutation,
-  useDeleteCategoryMutation,
+  useGetSubcategoriesQuery,
+  useCreateSubcategoryMutation,
+  useUpdateSubcategoryMutation,
+  useDeleteSubcategoryMutation,
 } from "state/api";
 import Header from "components/Header";
 import FlexBetween from "components/FlexBetween";
@@ -13,10 +13,10 @@ import CrudDatagridTable from "components/crudDatagrid/CrudDatagridTable";
 import CrudDatagridActionUpdate from "components/crudDatagrid/CrudDatagridActionUpdate";
 import CrudDatagridActionCreate from "components/crudDatagrid/CrudDatagridActionCreate";
 import CrudDatagridActionDelete from "components/crudDatagrid/CrudDatagridActionDelete";
-import CategoryInputForm from "components/crudDatagrid/inputForms/CategoryInputForm";
+import SubcategoryInputForm from "components/crudDatagrid/inputForms/SubcategoryInputForm";
 
-const Categories = () => {
-  const entityName = "Category";
+const Subcategories = () => {
+  const entityName = "Subcategory";
 
   // ROW SELECT
   const [selectedRow, setSelectedRow] = useState();
@@ -29,6 +29,7 @@ const Categories = () => {
         ...updateInput,
         id: rowData.id,
         name: rowData.name,
+        category: rowData.category,
       });
     }
   };
@@ -47,14 +48,18 @@ const Categories = () => {
     setCreateInput({
       ...createInput,
       name: "",
+      category: "",
     });
   };
 
   // QUERIES
-  const { data, isLoading } = useGetCategoriesQuery();
-  const [createQuery] = useCreateCategoryMutation();
-  const [updateQuery] = useUpdateCategoryMutation();
-  const [deleteQuery] = useDeleteCategoryMutation();
+  const { data, isLoading } = useGetSubcategoriesQuery({
+    category: "",
+    forceRefetch: true,
+  });
+  const [createQuery] = useCreateSubcategoryMutation();
+  const [updateQuery] = useUpdateSubcategoryMutation();
+  const [deleteQuery] = useDeleteSubcategoryMutation();
 
   const columns = [
     {
@@ -69,12 +74,18 @@ const Categories = () => {
       flex: 0.5,
       sortable: false,
     },
+    {
+      field: "category",
+      headerName: "Category",
+      flex: 0.5,
+      sortable: false,
+    },
   ];
 
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="CATEGORIES" subtitle="Categories management" />
+        <Header title="SUBCATEGORIES" subtitle="Subcategories management" />
         <CrudDatagridActions
           createAction={
             <CrudDatagridActionCreate
@@ -84,7 +95,7 @@ const Categories = () => {
               setCreateInput={setCreateInput}
               handleClearInput={handleClearInput}
               Form={
-                <CategoryInputForm
+                <SubcategoryInputForm
                   data={createInput}
                   setData={setCreateInput}
                 />
@@ -100,7 +111,7 @@ const Categories = () => {
               setUpdateInput={setUpdateInput}
               handleClearInput={handleClearInput}
               Form={
-                <CategoryInputForm
+                <SubcategoryInputForm
                   data={updateInput}
                   setData={setUpdateInput}
                 />
@@ -126,4 +137,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default Subcategories;

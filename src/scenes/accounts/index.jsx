@@ -14,6 +14,7 @@ import CrudDatagridActionUpdate from "components/crudDatagrid/CrudDatagridAction
 import CrudDatagridActionCreate from "components/crudDatagrid/CrudDatagridActionCreate";
 import CrudDatagridActionDelete from "components/crudDatagrid/CrudDatagridActionDelete";
 import AccountInputForm from "components/crudDatagrid/inputForms/AccountInputForm";
+import CrudDatagridActionDownload from "components/crudDatagrid/CrudDatagridActionDownload";
 
 const Accounts = () => {
   const entityName = "Account";
@@ -106,6 +107,12 @@ const Accounts = () => {
               entityName={entityName}
               deleteQuery={deleteQuery}
               selectedRow={selectedRow}
+            />
+          }
+          downloadAction={
+            <CrudDatagridActionDownload
+              link="http://localhost:8088/accounts"
+              name="accounts.json"
             />
           }
         />

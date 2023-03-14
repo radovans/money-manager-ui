@@ -17,6 +17,7 @@ import Rules from "scenes/rules";
 import Accounts from "scenes/accounts";
 import Categories from "scenes/categories";
 import Subcategories from "scenes/subcategories";
+import Data from "scenes/data";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -36,6 +37,7 @@ function App() {
               <Route path="/expenses" element={<Expenses />} />
               <Route path="/by-category" element={<ByCategory />} />
               <Route path="/cumulative" element={<Cumulative />} />
+              <Route path="/data" element={<Data />} />
               <Route path="/rules" element={<Rules />} />
               <Route path="/accounts" element={<Accounts />} />
               <Route path="/categories" element={<Categories />} />

@@ -14,6 +14,7 @@ import CrudDatagridActionUpdate from "components/crudDatagrid/CrudDatagridAction
 import CrudDatagridActionCreate from "components/crudDatagrid/CrudDatagridActionCreate";
 import CrudDatagridActionDelete from "components/crudDatagrid/CrudDatagridActionDelete";
 import SubcategoryInputForm from "components/crudDatagrid/inputForms/SubcategoryInputForm";
+import CrudDatagridActionDownload from "components/crudDatagrid/CrudDatagridActionDownload";
 
 const Subcategories = () => {
   const entityName = "Subcategory";
@@ -123,6 +124,12 @@ const Subcategories = () => {
               entityName={entityName}
               deleteQuery={deleteQuery}
               selectedRow={selectedRow}
+            />
+          }
+          downloadAction={
+            <CrudDatagridActionDownload
+              link="http://localhost:8088/subcategories"
+              name="subcategories.json"
             />
           }
         />

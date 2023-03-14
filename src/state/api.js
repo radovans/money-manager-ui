@@ -21,21 +21,11 @@ export const api = createApi({
       providesTags: ["User"],
     }),
 
-    getTransactions: build.query({
-      query: ({ page, size, sort, search, from, to, category }) => ({
-        url: "transactions",
-        method: "GET",
-        params: { page, size, sort, search, from, to, category },
-      }),
-      providesTags: ["Transactions"],
-    }),
-
+    // STATISTICS
     getDashboard: build.query({
       query: () => "statistics",
       providesTags: ["Dashboard"],
     }),
-
-    // STATISTICS
     getYearlyStatistics: build.query({
       query: ({ salaryOnly }) => ({
         url: "statistics/year-month/year",
@@ -55,6 +45,45 @@ export const api = createApi({
         params: { from, to, category },
       }),
       providesTags: ["CategoriesStatistics"],
+    }),
+
+    // TRANSACTIONS
+    getTransactions: build.query({
+      query: ({ page, size, sort, search, from, to, category }) => ({
+        url: "transactions",
+        method: "GET",
+        params: { page, size, sort, search, from, to, category },
+      }),
+      providesTags: ["Transactions"],
+    }),
+    createTransaction: build.mutation({
+      query: (payload) => ({
+        url: "transactions",
+        method: "POST",
+        body: payload,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }),
+      invalidatesTags: ["Transactions"],
+    }),
+    updateTransaction: build.mutation({
+      query: ({ id, payload }) => ({
+        url: `transactions/${id}`,
+        method: "PUT",
+        body: payload,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }),
+      invalidatesTags: ["Transactions"],
+    }),
+    deleteTransaction: build.mutation({
+      query: (id) => ({
+        url: `transactions/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Transactions"],
     }),
 
     // RULES
@@ -205,11 +234,15 @@ export const api = createApi({
 
 export const {
   useGetUserQuery,
-  useGetTransactionsQuery,
   useGetDashboardQuery,
   useGetYearlyStatisticsQuery,
   useGetCategoriesStatisticsQuery,
   useGetMonthlyStatisticsQuery,
+
+  useGetTransactionsQuery,
+  useCreateTransactionMutation,
+  useDeleteTransactionMutation,
+  useUpdateTransactionMutation,
 
   useGetRulesQuery,
   useCreateRuleMutation,

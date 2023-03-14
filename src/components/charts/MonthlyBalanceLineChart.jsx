@@ -44,7 +44,7 @@ const MonthlyBalanceLineChart = ({ isDashboard = false }) => {
     datasets: [
       {
         label: "Cumulative balance",
-        data: data?.map((x) => x.cumulativeAmount),
+        data: data?.map((x) => x.cumulativeBalance),
         backgroundColor: [theme.palette.chart_opacity[100]],
         borderColor: [theme.palette.chart[100]],
         borderWidth: 3,

@@ -10,7 +10,7 @@ const CrudDatagridActionDownload = (props) => {
   };
 
   const saveFile = () => {
-    saveAs(props.link, "rules.json");
+    saveAs(props.link, props.name);
   };
 
   return (

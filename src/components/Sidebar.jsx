@@ -65,6 +65,10 @@ const graphsItems = [
 
 const settingsItems = [
   {
+    text: "Data",
+    icon: <ReceiptLongOutlined />,
+  },
+  {
     text: "Rules",
     icon: <RuleOutlined />,
   },

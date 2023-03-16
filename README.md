@@ -1,70 +1,36 @@
-# Getting Started with Create React App
+# Money manager
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Multipurpose application for managing home finances.
+- process monthly bank statements and apply rules to categorize transactions
+- track past transactions and create spending reports
+- plan future transactions and create budget reports
+- track assets and liabilities
 
-## Available Scripts
+## Application
 
-In the project directory, you can run:
+### Dashboard
+![dashboard](https://user-images.githubusercontent.com/3687019/225699653-a721076f-6179-4338-97bb-af9b2c45b2d8.png)
 
-### `npm start`
+### Transactions
+![transactions](https://user-images.githubusercontent.com/3687019/225699635-5d5c5824-400f-4a9c-b87b-750349890b56.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Editing transaction
+![transaction](https://user-images.githubusercontent.com/3687019/225699602-ae07067d-a417-4c94-896a-8c870947cbc0.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Balance
+![balance](https://user-images.githubusercontent.com/3687019/225699576-1640484b-f6d1-47d7-babd-aaf75ac9fbdd.png)
 
-### `npm test`
+### Incomes
+![incomes](https://user-images.githubusercontent.com/3687019/225699554-b06bb73b-da90-4876-829a-11b322234d74.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Categories in bar chart
+![categories-bar](https://user-images.githubusercontent.com/3687019/225699515-56e39508-623b-4f3d-8c19-269ed25cdf83.png)
 
-### `npm run build`
+### Categories in pie chart
+![categories-pie](https://user-images.githubusercontent.com/3687019/225699448-5c0105be-889a-47c0-8c4a-7dea8ccd9220.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Cumulative balance
+![cumulative](https://user-images.githubusercontent.com/3687019/225699426-4c2fa2f9-a49d-4566-83f9-39215e721d40.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Subcategoy management
+![subcategories](https://user-images.githubusercontent.com/3687019/225699396-7327fb47-c56f-44c7-8470-7ea966bd214f.png)

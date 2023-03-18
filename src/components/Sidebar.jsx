@@ -38,9 +38,17 @@ const dataItems = [
     text: "Transactions",
     icon: <ReceiptLongOutlined />,
   },
+  {
+    text: "Category report",
+    icon: <TableRowsOutlined />,
+  },
+  {
+    text: "Subcategory report",
+    icon: <TableRowsOutlined />,
+  },
 ];
 
-const graphsItems = [
+const graphItems = [
   {
     text: "Balance",
     icon: <SsidChartOutlined />,
@@ -213,7 +221,10 @@ const Sidebar = ({
               </Collapse>
 
               {/* GRAPHS */}
-              <ListItemButton sx={{ m: "0.5rem 0" }} onClick={handleGraphsClick}>
+              <ListItemButton
+                sx={{ m: "0.5rem 0" }}
+                onClick={handleGraphsClick}
+              >
                 <ListItemIcon
                   sx={{
                     ml: "1rem",
@@ -227,7 +238,7 @@ const Sidebar = ({
               </ListItemButton>
               <Collapse in={graphsOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  {graphsItems.map(({ text, icon }) => {
+                  {graphItems.map(({ text, icon }) => {
                     const lcText = text.toLowerCase();
 
                     return (

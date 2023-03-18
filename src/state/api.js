@@ -10,6 +10,10 @@ export const api = createApi({
     "YearlyStatistics",
     "MonthlyStatistics",
     "CategoriesStatistics",
+    "YearlyCategoriesStatistics",
+    "MonthlyCategoriesStatistics",
+    "YearlySubcategoriesStatistics",
+    "MonthlySubcategoriesStatistics",
     "Rules",
     "Accounts",
     "Categories",
@@ -37,6 +41,22 @@ export const api = createApi({
     getMonthlyStatistics: build.query({
       query: () => "statistics/year-month/all",
       providesTags: ["MonthlyStatistics"],
+    }),
+    getYearlyCategoriesStatistics: build.query({
+      query: () => "statistics/categories/yearly",
+      providesTags: ["YearlyCategoriesStatistics"],
+    }),
+    getMonthlyCategoriesStatistics: build.query({
+      query: () => "statistics/categories/monthly",
+      providesTags: ["MonthlyCategoriesStatistics"],
+    }),
+    getYearlySubcategoriesStatistics: build.query({
+      query: () => "statistics/subcategories/yearly",
+      providesTags: ["YearlySubcategoriesStatistics"],
+    }),
+    getMonthlySubcategoriesStatistics: build.query({
+      query: () => "statistics/subcategories/monthly",
+      providesTags: ["MonthlySubcategoriesStatistics"],
     }),
     getCategoriesStatistics: build.query({
       query: ({ from, to, category }) => ({
@@ -238,6 +258,10 @@ export const {
   useGetYearlyStatisticsQuery,
   useGetCategoriesStatisticsQuery,
   useGetMonthlyStatisticsQuery,
+  useGetYearlyCategoriesStatisticsQuery,
+  useGetMonthlyCategoriesStatisticsQuery,
+  useGetYearlySubcategoriesStatisticsQuery,
+  useGetMonthlySubcategoriesStatisticsQuery,
 
   useGetTransactionsQuery,
   useCreateTransactionMutation,

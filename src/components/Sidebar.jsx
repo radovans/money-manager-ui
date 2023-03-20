@@ -46,6 +46,10 @@ const dataItems = [
     text: "Subcategory report",
     icon: <TableRowsOutlined />,
   },
+  {
+    text: "Recipient report",
+    icon: <TableRowsOutlined />,
+  },
 ];
 
 const graphItems = [

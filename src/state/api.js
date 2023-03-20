@@ -14,6 +14,8 @@ export const api = createApi({
     "MonthlyCategoriesStatistics",
     "YearlySubcategoriesStatistics",
     "MonthlySubcategoriesStatistics",
+    "YearlyRecipientsStatistics",
+    "MonthlyRecipientsStatistics",
     "Rules",
     "Accounts",
     "Categories",
@@ -57,6 +59,14 @@ export const api = createApi({
     getMonthlySubcategoriesStatistics: build.query({
       query: () => "statistics/subcategories/monthly",
       providesTags: ["MonthlySubcategoriesStatistics"],
+    }),
+    getYearlyRecipientsStatistics: build.query({
+      query: () => "statistics/recipients/yearly",
+      providesTags: ["YearlyRecipientsStatistics"],
+    }),
+    getMonthlyRecipientsStatistics: build.query({
+      query: () => "statistics/recipients/monthly",
+      providesTags: ["MonthlyRecipientsStatistics"],
     }),
     getCategoriesStatistics: build.query({
       query: ({ from, to, category }) => ({
@@ -262,6 +272,8 @@ export const {
   useGetMonthlyCategoriesStatisticsQuery,
   useGetYearlySubcategoriesStatisticsQuery,
   useGetMonthlySubcategoriesStatisticsQuery,
+  useGetYearlyRecipientsStatisticsQuery,
+  useGetMonthlyRecipientsStatisticsQuery,
 
   useGetTransactionsQuery,
   useCreateTransactionMutation,

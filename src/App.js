@@ -20,6 +20,7 @@ import Subcategories from "scenes/subcategories";
 import Data from "scenes/data";
 import CategoryReport from "scenes/category-report";
 import SubcategoryReport from "scenes/subcategory-report";
+import RecipientReport from "scenes/recipient-report";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -36,6 +37,7 @@ function App() {
               <Route path="/transactions" element={<Transactions />} />
               <Route path="/category-report" element={<CategoryReport />} />
               <Route path="/subcategory-report" element={<SubcategoryReport />} />
+              <Route path="/recipient-report" element={<RecipientReport />} />
               <Route path="/balance" element={<Balance />} />
               <Route path="/incomes" element={<Incomes />} />
               <Route path="/expenses" element={<Expenses />} />

@@ -6,7 +6,18 @@ Multipurpose application for managing home finances.
 - plan future transactions and create budget reports
 - track assets and liabilities
 
+## Run
+
+### Build the Docker image for the current folder and tag it with `money-manager-react`
+docker build . -t money-manager-react
+
+### Run the image in detached mode and map port 3000 inside the container with 3000 on current host
+docker run -p 3000:3000 -d money-manager-react
+
 ## Application
+
+### Template
+I originally started with this [template](https://youtu.be/0cPCMIuDk2I), the code can be found [here](https://github.com/ed-roh/fullstack-admin) which I gradually modified according to my ideas. In the project I use redux, Material UI components and Chart.js
 
 ### Dashboard
 ![dashboard](https://user-images.githubusercontent.com/3687019/225699653-a721076f-6179-4338-97bb-af9b2c45b2d8.png)
@@ -34,3 +45,6 @@ Multipurpose application for managing home finances.
 
 ### Subcategoy management
 ![subcategories](https://user-images.githubusercontent.com/3687019/225699396-7327fb47-c56f-44c7-8470-7ea966bd214f.png)
+
+### Recipient report
+![recipient-report](https://user-images.githubusercontent.com/3687019/227804499-fcf11403-6763-4d9e-924f-540b1947a4ff.png)
